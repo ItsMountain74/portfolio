@@ -9,7 +9,7 @@ window.PORTFOLIO_CONFIG = {
    * - Project site (username.github.io/repo-name): use "/repo-name"
    * Leave empty to auto-detect from the current URL.
    */
-  basePath: "/ItsMountain.github.io",
+  basePath: "/portfolio",
 
   /** Change this password before going live. Default: admin123 */
   adminPassword: "1TapOneKill",
