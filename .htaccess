@@ -1,0 +1,20 @@
+# Apache configuration — open index.html automatically for directory URLs
+# Note: GitHub Pages ignores .htaccess. Use this on Apache/cPanel hosting only.
+
+DirectoryIndex index.html
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # If your site lives in a subfolder, uncomment and set the path:
+  # RewriteBase /portfolio/
+
+  # Visiting / serves index.html (no redirect needed if DirectoryIndex is set)
+  RewriteRule ^$ index.html [L]
+
+  # /admin/ and other folders → their index.html
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteCond %{REQUEST_URI} !/$
+  RewriteRule ^(.+)$ $1/ [R=301,L]
+</IfModule>

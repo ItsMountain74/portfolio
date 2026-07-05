@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Admin Dashboard - Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../assets/css/admin.css" rel="stylesheet">
+</head>
+<body class="admin-page">
+
+  <div id="login-view" class="admin-login-wrapper">
+    <div class="admin-login-card">
+      <h2 class="mb-1">Portfolio Admin</h2>
+      <p class="text-muted mb-4">Sign in to manage projects and messages</p>
+      <div id="login-error" class="alert alert-danger d-none"></div>
+      <form id="login-form">
+        <div class="mb-3">
+          <label for="admin-password" class="form-label">Password</label>
+          <input type="password" class="form-control" id="admin-password" required>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Login</button>
+      </form>
+      <p class="text-muted small mt-3 mb-0">Default password: <code>admin123</code> — change it in <code>assets/js/config.js</code></p>
+    </div>
+  </div>
+
+  <div id="dashboard-view" class="d-none">
+    <div class="admin-layout">
+      <aside class="admin-sidebar">
+        <div class="brand"><h1><i class="bi bi-speedometer2"></i> Admin</h1></div>
+        <nav>
+          <a href="#" data-panel="panel-overview" class="active"><i class="bi bi-grid"></i> Overview</a>
+          <a href="#" data-panel="panel-projects"><i class="bi bi-folder"></i> Projects</a>
+          <a href="#" data-panel="panel-add-project"><i class="bi bi-plus-circle"></i> Add Project</a>
+          <a href="#" data-panel="panel-messages"><i class="bi bi-envelope"></i> Messages</a>
+          <a href="#" data-panel="panel-data"><i class="bi bi-database"></i> Data & Export</a>
+        </nav>
+      </aside>
+
+      <main class="admin-main">
+        <div class="admin-topbar">
+          <h2 class="mb-0">Dashboard</h2>
+          <div>
+            <a id="view-site" href="../index.html" class="btn btn-outline-primary btn-sm me-2" target="_blank"><i class="bi bi-box-arrow-up-right"></i> View Site</a>
+            <button id="logout-btn" class="btn btn-outline-secondary btn-sm"><i class="bi bi-box-arrow-right"></i> Logout</button>
+          </div>
+        </div>
+
+        <div id="panel-overview" class="admin-panel active">
+          <div class="row g-3">
+            <div class="col-md-4"><div class="admin-card admin-stat"><div class="number" id="stat-projects">0</div><div class="label">Projects</div></div></div>
+            <div class="col-md-4"><div class="admin-card admin-stat"><div class="number" id="stat-messages">0</div><div class="label">Messages</div></div></div>
+            <div class="col-md-4"><div class="admin-card admin-stat"><div class="number" id="stat-unread">0</div><div class="label">Unread</div></div></div>
+          </div>
+          <div class="admin-card">
+            <h3>Quick Start</h3>
+            <ol class="mb-0">
+              <li>Add or edit projects under <strong>Projects</strong> or <strong>Add Project</strong></li>
+              <li>Upload screenshots to <code>assets/img/portfolio/</code> and reference their paths</li>
+              <li>Export JSON files from <strong>Data & Export</strong> and commit them to GitHub</li>
+              <li>Change the admin password in <code>assets/js/config.js</code></li>
+            </ol>
+          </div>
+        </div>
+
+        <div id="panel-projects" class="admin-panel">
+          <div class="admin-card">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h3 class="mb-0">All Projects</h3>
+              <button class="btn btn-primary btn-sm" id="goto-add-project"><i class="bi bi-plus"></i> Add New</button>
+            </div>
+            <div class="table-responsive">
+              <table class="table admin-table">
+                <thead><tr><th></th><th>Project</th><th>Category</th><th>Status</th><th>Actions</th></tr></thead>
+                <tbody id="projects-table-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div id="panel-add-project" class="admin-panel">
+          <div class="admin-card">
+            <h3 id="form-title">Add Project</h3>
+            <form id="project-form">
+              <input type="hidden" id="project-id">
+              <div class="row g-3">
+                <div class="col-md-8"><label class="form-label">Title *</label><input type="text" class="form-control" id="project-title" required></div>
+                <div class="col-md-4"><label class="form-label">Project Date</label><input type="date" class="form-control" id="project-date"></div>
+                <div class="col-md-4"><label class="form-label">Category ID</label><input type="text" class="form-control" id="project-category" placeholder="app, web, branding"></div>
+                <div class="col-md-4"><label class="form-label">Category Label</label><input type="text" class="form-control" id="project-category-label" placeholder="App, Web, Branding"></div>
+                <div class="col-md-4"><label class="form-label">Client</label><input type="text" class="form-control" id="project-client"></div>
+                <div class="col-12"><label class="form-label">Short Description</label><input type="text" class="form-control" id="project-short-desc"></div>
+                <div class="col-12"><label class="form-label">Full Description</label><textarea class="form-control" id="project-desc" rows="4"></textarea></div>
+                <div class="col-12"><label class="form-label">Thumbnail Path *</label><input type="text" class="form-control" id="project-thumbnail" placeholder="assets/img/portfolio/app-1.jpg" required></div>
+                <div class="col-12"><label class="form-label">Screenshots (one path per line)</label><textarea class="form-control" id="project-screenshots" rows="4" placeholder="assets/img/portfolio/app-1.jpg"></textarea><div id="screenshots-preview" class="screenshot-preview"></div></div>
+                <div class="col-md-4"><label class="form-label">Website URL</label><input type="url" class="form-control" id="project-website" placeholder="https://"></div>
+                <div class="col-md-4"><label class="form-label">App Store URL</label><input type="url" class="form-control" id="project-appstore" placeholder="https://apps.apple.com/"></div>
+                <div class="col-md-4"><label class="form-label">Google Play URL</label><input type="url" class="form-control" id="project-playstore" placeholder="https://play.google.com/"></div>
+                <div class="col-12"><div class="form-check"><input class="form-check-input" type="checkbox" id="project-published" checked><label class="form-check-label" for="project-published">Published (visible on site)</label></div></div>
+                <div class="col-12">
+                  <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> Save Project</button>
+                  <button type="button" id="cancel-edit" class="btn btn-outline-secondary ms-2">Cancel</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div id="panel-messages" class="admin-panel">
+          <div class="admin-card">
+            <h3>Contact Messages</h3>
+            <div class="admin-alert admin-alert-info">Messages are stored in the browser. Export <code>messages.json</code> and commit to GitHub to persist them on your live site.</div>
+            <div id="messages-list"></div>
+          </div>
+        </div>
+
+        <div id="panel-data" class="admin-panel">
+          <div class="admin-card">
+            <h3>Export for GitHub Pages</h3>
+            <p class="text-muted">After making changes, export these files and replace <code>data/projects.json</code> and <code>data/messages.json</code> in your repo, then push to GitHub.</p>
+            <button id="export-projects" class="btn btn-primary me-2 mb-2"><i class="bi bi-download"></i> Export projects.json</button>
+            <button id="export-messages" class="btn btn-primary mb-2"><i class="bi bi-download"></i> Export messages.json</button>
+          </div>
+          <div class="admin-card">
+            <h3>Import JSON</h3>
+            <div class="mb-3"><label class="form-label">Import projects.json</label><input type="file" class="form-control" id="import-projects" accept=".json"></div>
+            <div class="mb-3"><label class="form-label">Import messages.json</label><input type="file" class="form-control" id="import-messages" accept=".json"></div>
+          </div>
+          <div class="admin-card">
+            <h3>Reset Local Data</h3>
+            <p class="text-muted">Clear browser storage and reload from committed JSON files.</p>
+            <button id="clear-local-data" class="btn btn-outline-danger"><i class="bi bi-trash"></i> Clear Local Data</button>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="../assets/js/config.js"></script>
+  <script src="../assets/js/data-store.js"></script>
+  <script src="../assets/js/admin.js"></script>
+</body>
+</html>

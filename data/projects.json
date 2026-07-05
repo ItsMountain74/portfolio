@@ -1,0 +1,67 @@
+[
+  {
+    "id": "mobile-task-app",
+    "title": "TaskFlow Mobile",
+    "category": "app",
+    "categoryLabel": "App",
+    "shortDescription": "Cross-platform productivity app for teams",
+    "description": "TaskFlow is a mobile productivity application built with Flutter. It helps teams organize tasks, track deadlines, and collaborate in real time with offline support and push notifications.",
+    "thumbnail": "assets/img/portfolio/app-1.jpg",
+    "screenshots": [
+      "assets/img/portfolio/app-1.jpg",
+      "assets/img/portfolio/app-2.jpg",
+      "assets/img/portfolio/app-3.jpg"
+    ],
+    "links": {
+      "website": "https://example.com/taskflow",
+      "appStore": "https://apps.apple.com/app/example",
+      "playStore": "https://play.google.com/store/apps/details?id=com.example.taskflow"
+    },
+    "client": "Personal Project",
+    "projectDate": "2024-06-15",
+    "published": true
+  },
+  {
+    "id": "ecommerce-platform",
+    "title": "ShopWave",
+    "category": "web",
+    "categoryLabel": "Web",
+    "shortDescription": "Modern e-commerce web platform",
+    "description": "ShopWave is a responsive e-commerce website with product catalog, cart, and checkout. Built with modern web standards and optimized for performance and SEO.",
+    "thumbnail": "assets/img/portfolio/product-1.jpg",
+    "screenshots": [
+      "assets/img/portfolio/product-1.jpg",
+      "assets/img/portfolio/product-2.jpg"
+    ],
+    "links": {
+      "website": "https://example.com/shopwave",
+      "appStore": "",
+      "playStore": ""
+    },
+    "client": "Freelance Client",
+    "projectDate": "2023-11-20",
+    "published": true
+  },
+  {
+    "id": "brand-identity",
+    "title": "Nova Branding",
+    "category": "branding",
+    "categoryLabel": "Branding",
+    "shortDescription": "Complete brand identity and design system",
+    "description": "A full brand identity package including logo design, color palette, typography, and marketing collateral for a tech startup.",
+    "thumbnail": "assets/img/portfolio/branding-1.jpg",
+    "screenshots": [
+      "assets/img/portfolio/branding-1.jpg",
+      "assets/img/portfolio/branding-2.jpg",
+      "assets/img/portfolio/branding-3.jpg"
+    ],
+    "links": {
+      "website": "",
+      "appStore": "",
+      "playStore": ""
+    },
+    "client": "Nova Tech",
+    "projectDate": "2024-02-10",
+    "published": true
+  }
+]
