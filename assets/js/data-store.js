@@ -177,7 +177,10 @@ const PortfolioDataStore = (function () {
         profileImage: "assets/img/my-profile-img.jpg",
         heroBackground: "assets/img/hero-bg.jpg",
         details: {},
-        social: {}
+        social: {},
+        skillsIntro: "",
+        skills: [],
+        contact: {}
       };
     }
   }

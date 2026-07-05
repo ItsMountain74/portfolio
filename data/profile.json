@@ -9,13 +9,11 @@
   "heroBackground": "assets/img/hero-bg.jpg",
   "details": {
     "birthday": "1 May 1995",
-    "website": "www.example.com",
     "phone": "+123 456 7890",
     "city": "New York, USA",
     "age": "30",
     "degree": "Master",
-    "email": "email@example.com",
-    "freelance": "Available"
+    "email": "email@example.com"
   },
   "social": {
     "twitter": "",
@@ -23,5 +21,21 @@
     "instagram": "",
     "skype": "",
     "linkedin": ""
+  },
+  "skillsIntro": "Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit",
+  "skills": [
+    { "name": "HTML", "level": 100 },
+    { "name": "CSS", "level": 90 },
+    { "name": "JavaScript", "level": 75 },
+    { "name": "PHP", "level": 80 },
+    { "name": "WordPress/CMS", "level": 90 },
+    { "name": "Photoshop", "level": 55 }
+  ],
+  "contact": {
+    "intro": "Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit",
+    "address": "A108 Adam Street, New York, NY 535022",
+    "phone": "+1 5589 55488 55",
+    "email": "info@example.com",
+    "mapEmbedUrl": "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d48389.78314118045!2d-74.006138!3d40.710059!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a22a3bda30d%3A0xb89d1fe6bc499443!2sDowntown%20Conference%20Center!5e0!3m2!1sen!2sus!4v1676961268712!5m2!1sen!2sus"
   }
 }

@@ -67,6 +67,42 @@
     }
   }
 
+  function createSkillRow(skill) {
+    const row = document.createElement("div");
+    row.className = "row g-2 align-items-end skill-row";
+    row.innerHTML =
+      '<div class="col-md-5"><label class="form-label small mb-1">Skill name</label>' +
+        '<input type="text" class="form-control form-control-sm skill-name" value="' + escapeHtml(skill?.name || "") + '"></div>' +
+      '<div class="col-md-5"><label class="form-label small mb-1">Level (0–100)</label>' +
+        '<input type="number" class="form-control form-control-sm skill-level" min="0" max="100" value="' + (skill?.level ?? 50) + '"></div>' +
+      '<div class="col-md-2"><button type="button" class="btn btn-outline-danger btn-sm w-100 remove-skill-btn"><i class="bi bi-trash"></i></button></div>';
+    row.querySelector(".remove-skill-btn").addEventListener("click", function () {
+      row.remove();
+    });
+    return row;
+  }
+
+  function renderSkillsList(skills) {
+    const list = document.getElementById("skills-list");
+    if (!list) return;
+    list.innerHTML = "";
+    (skills || []).forEach(function (skill) {
+      list.appendChild(createSkillRow(skill));
+    });
+  }
+
+  function collectSkillsFromForm() {
+    const rows = document.querySelectorAll("#skills-list .skill-row");
+    const skills = [];
+    rows.forEach(function (row) {
+      const name = row.querySelector(".skill-name")?.value.trim();
+      const level = parseInt(row.querySelector(".skill-level")?.value, 10);
+      if (!name) return;
+      skills.push({ name: name, level: isNaN(level) ? 0 : Math.min(100, Math.max(0, level)) });
+    });
+    return skills;
+  }
+
   function fillProfileForm(data) {
     profile = data;
     formProfileImage = data.profileImage || "";
@@ -81,13 +117,21 @@
 
     const d = data.details || {};
     document.getElementById("profile-birthday").value = d.birthday || "";
-    document.getElementById("profile-website").value = d.website || "";
     document.getElementById("profile-phone").value = d.phone || "";
     document.getElementById("profile-city").value = d.city || "";
     document.getElementById("profile-age").value = d.age || "";
     document.getElementById("profile-degree").value = d.degree || "";
     document.getElementById("profile-email").value = d.email || "";
-    document.getElementById("profile-freelance").value = d.freelance || "";
+
+    document.getElementById("profile-skills-intro").value = data.skillsIntro || "";
+    renderSkillsList(data.skills || []);
+
+    const c = data.contact || {};
+    document.getElementById("profile-contact-intro").value = c.intro || "";
+    document.getElementById("profile-contact-address").value = c.address || "";
+    document.getElementById("profile-contact-phone").value = c.phone || "";
+    document.getElementById("profile-contact-email").value = c.email || "";
+    document.getElementById("profile-contact-map").value = c.mapEmbedUrl || "";
 
     const s = data.social || {};
     document.getElementById("profile-twitter").value = s.twitter || "";
@@ -111,13 +155,20 @@
       heroBackground: formHeroBackground,
       details: {
         birthday: document.getElementById("profile-birthday").value.trim(),
-        website: document.getElementById("profile-website").value.trim(),
         phone: document.getElementById("profile-phone").value.trim(),
         city: document.getElementById("profile-city").value.trim(),
         age: document.getElementById("profile-age").value.trim(),
         degree: document.getElementById("profile-degree").value.trim(),
-        email: document.getElementById("profile-email").value.trim(),
-        freelance: document.getElementById("profile-freelance").value.trim()
+        email: document.getElementById("profile-email").value.trim()
+      },
+      skillsIntro: document.getElementById("profile-skills-intro").value.trim(),
+      skills: collectSkillsFromForm(),
+      contact: {
+        intro: document.getElementById("profile-contact-intro").value.trim(),
+        address: document.getElementById("profile-contact-address").value.trim(),
+        phone: document.getElementById("profile-contact-phone").value.trim(),
+        email: document.getElementById("profile-contact-email").value.trim(),
+        mapEmbedUrl: document.getElementById("profile-contact-map").value.trim()
       },
       social: {
         twitter: document.getElementById("profile-twitter").value.trim(),
@@ -142,6 +193,10 @@
   function init() {
     const form = document.getElementById("profile-form");
     if (!form) return;
+
+    document.getElementById("add-skill-btn")?.addEventListener("click", function () {
+      document.getElementById("skills-list")?.appendChild(createSkillRow({ name: "", level: 50 }));
+    });
 
     document.getElementById("profile-image-upload")?.addEventListener("change", async function (e) {
       const file = e.target.files[0];

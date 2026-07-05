@@ -21,6 +21,88 @@
     return "<li><i class=\"bi bi-chevron-right\"></i> <strong>" + escapeHtml(label) + ":</strong> <span>" + escapeHtml(value) + "</span></li>";
   }
 
+  function renderSkillItem(skill) {
+    const level = Math.min(100, Math.max(0, parseInt(skill.level, 10) || 0));
+    return (
+      '<div class="progress">' +
+        '<span class="skill"><span>' + escapeHtml(skill.name) + '</span> <i class="val">' + level + '%</i></span>' +
+        '<div class="progress-bar-wrap">' +
+          '<div class="progress-bar" role="progressbar" aria-valuenow="' + level + '" aria-valuemin="0" aria-valuemax="100"></div>' +
+        "</div>" +
+      "</div>"
+    );
+  }
+
+  function initSkillsAnimation(container) {
+    if (!container || typeof Waypoint !== "function") return;
+    new Waypoint({
+      element: container,
+      offset: "80%",
+      handler: function () {
+        container.querySelectorAll(".progress .progress-bar").forEach(function (el) {
+          el.style.width = el.getAttribute("aria-valuenow") + "%";
+        });
+      }
+    });
+  }
+
+  function renderSkills(profile) {
+    const intro = document.getElementById("skills-intro");
+    const container = document.getElementById("skills-content");
+    if (!container) return;
+
+    if (intro) intro.textContent = profile.skillsIntro || "";
+
+    const skills = (profile.skills || []).filter(function (s) { return s.name; });
+    if (!skills.length) {
+      container.innerHTML = '<p class="text-muted text-center mb-0">No skills listed yet.</p>';
+      return;
+    }
+
+    const midpoint = Math.ceil(skills.length / 2);
+    const left = skills.slice(0, midpoint).map(renderSkillItem).join("");
+    const right = skills.slice(midpoint).map(renderSkillItem).join("");
+
+    container.innerHTML =
+      '<div class="row skills-content skills-animation">' +
+        '<div class="col-lg-6">' + left + "</div>" +
+        '<div class="col-lg-6">' + right + "</div>" +
+      "</div>";
+
+    initSkillsAnimation(container.querySelector(".skills-animation"));
+  }
+
+  function renderContactInfo(profile) {
+    const intro = document.getElementById("contact-intro");
+    const wrap = document.getElementById("contact-info");
+    if (!wrap) return;
+
+    const c = profile.contact || {};
+    if (intro) intro.textContent = c.intro || "";
+
+    const items = [
+      { icon: "bi-geo-alt", title: "Address", value: c.address, delay: 200 },
+      { icon: "bi-telephone", title: "Call Us", value: c.phone, delay: 300 },
+      { icon: "bi-envelope", title: "Email Us", value: c.email, delay: 400 }
+    ];
+
+    wrap.innerHTML = items.filter(function (item) { return item.value; }).map(function (item) {
+      return (
+        '<div class="info-item d-flex" data-aos="fade-up" data-aos-delay="' + item.delay + '">' +
+          '<i class="bi ' + item.icon + ' flex-shrink-0"></i>' +
+          "<div><h3>" + escapeHtml(item.title) + "</h3><p>" + escapeHtml(item.value) + "</p></div>" +
+        "</div>"
+      );
+    }).join("") +
+    (c.mapEmbedUrl
+      ? '<iframe src="' + escapeHtml(c.mapEmbedUrl) + '" frameborder="0" style="border:0; width: 100%; height: 270px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>'
+      : "");
+
+    if (typeof AOS !== "undefined" && AOS.refresh) {
+      AOS.refresh();
+    }
+  }
+
   function renderSocialLinks(social) {
     const wrap = document.querySelector("#header .social-links");
     if (!wrap || !social) return;
@@ -101,14 +183,12 @@
             '<p class="fst-italic py-3">' + escapeHtml(profile.tagline || "") + "</p>" +
             '<div class="row"><div class="col-lg-6"><ul>' +
               renderDetail("Birthday", d.birthday) +
-              renderDetail("Website", d.website) +
               renderDetail("Phone", d.phone) +
               renderDetail("City", d.city) +
             '</ul></div><div class="col-lg-6"><ul>' +
               renderDetail("Age", d.age) +
               renderDetail("Degree", d.degree) +
               renderDetail("Email", d.email) +
-              renderDetail("Freelance", d.freelance) +
             "</ul></div></div>" +
             '<p class="py-3">' + escapeHtml(profile.aboutText || "") + "</p>" +
           "</div>" +
@@ -116,6 +196,8 @@
     }
 
     renderSocialLinks(profile.social);
+    renderSkills(profile);
+    renderContactInfo(profile);
     initTyped(profile.typedRoles);
   }
 
