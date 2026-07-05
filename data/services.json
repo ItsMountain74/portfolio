@@ -2,8 +2,8 @@
   {
     "id": "web-development",
     "title": "Web Development",
-    "description": "Responsive websites and web apps built with modern HTML, CSS, JavaScript, and performance best practices.",
-    "icon": "bi-briefcase",
+    "description": "I build modern, responsive, and user-friendly websites tailored to business needs. The website can include landing pages, company profiles, service pages, contact forms, multilingual support, and admin dashboard management.",
+    "icon": "bi-bell-fill",
     "published": true
   },
   {
@@ -14,17 +14,17 @@
     "published": true
   },
   {
-    "id": "ui-ux-design",
-    "title": "UI/UX Design",
-    "description": "User-centered interface design, wireframes, and prototypes that balance aesthetics with usability.",
-    "icon": "bi-palette",
-    "published": true
-  },
-  {
     "id": "consulting",
     "title": "Technical Consulting",
     "description": "Architecture reviews, code audits, and guidance to help teams ship reliable digital products faster.",
     "icon": "bi-lightbulb",
+    "published": true
+  },
+  {
+    "id": "custom-website-development-mr7p17xu",
+    "title": "E-commerce Development",
+    "description": "I develop custom e-commerce platforms with features like products, categories, carts, orders, coupons, payments, shipping, invoices, customer management, and order tracking.",
+    "icon": "bi-briefcase",
     "published": true
   }
 ]

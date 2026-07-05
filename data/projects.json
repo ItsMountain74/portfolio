@@ -1,25 +1,5 @@
 [
   {
-    "id": "mobile-task-app",
-    "title": "TaskFlow Mobile",
-    "shortDescription": "Cross-platform productivity app for teams",
-    "description": "TaskFlow is a mobile productivity application built with Flutter. It helps teams organize tasks, track deadlines, and collaborate in real time with offline support and push notifications.",
-    "thumbnail": "assets/img/portfolio/app-1.jpg",
-    "screenshots": [
-      "assets/img/portfolio/app-1.jpg",
-      "assets/img/portfolio/app-2.jpg",
-      "assets/img/portfolio/app-3.jpg"
-    ],
-    "links": {
-      "website": "https://example.com/taskflow",
-      "appStore": "https://apps.apple.com/app/example",
-      "playStore": "https://play.google.com/store/apps/details?id=com.example.taskflow"
-    },
-    "client": "Personal Project",
-    "projectDate": "2024-06-15",
-    "published": true
-  },
-  {
     "id": "ecommerce-platform",
     "title": "ShopWave",
     "shortDescription": "Modern e-commerce web platform",
