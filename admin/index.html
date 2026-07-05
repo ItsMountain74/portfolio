@@ -24,7 +24,6 @@
         </div>
         <button type="submit" class="btn btn-primary w-100">Login</button>
       </form>
-      <p class="text-muted small mt-3 mb-0">Default password: <code>admin123</code> — change it in <code>assets/js/config.js</code></p>
     </div>
   </div>
 
@@ -34,6 +33,7 @@
         <div class="brand"><h1><i class="bi bi-speedometer2"></i> Admin</h1></div>
         <nav>
           <a href="#" data-panel="panel-overview" class="active"><i class="bi bi-grid"></i> Overview</a>
+          <a href="#" data-panel="panel-profile"><i class="bi bi-person-badge"></i> Profile</a>
           <a href="#" data-panel="panel-projects"><i class="bi bi-folder"></i> Projects</a>
           <a href="#" data-panel="panel-add-project"><i class="bi bi-plus-circle"></i> Add Project</a>
           <a href="#" data-panel="panel-services"><i class="bi bi-hdd-stack"></i> Services</a>
@@ -69,6 +69,39 @@
               <li>Export JSON files from <strong>Data & Export</strong> and commit them to GitHub</li>
               <li>Change the admin password in <code>assets/js/config.js</code></li>
             </ol>
+          </div>
+        </div>
+
+        <div id="panel-profile" class="admin-panel">
+          <div class="admin-card">
+            <h3>Edit Profile</h3>
+            <form id="profile-form">
+              <div class="row g-3">
+                <div class="col-md-6"><label class="form-label">Full Name *</label><input type="text" class="form-control" id="profile-name" required></div>
+                <div class="col-md-6"><label class="form-label">Job Title</label><input type="text" class="form-control" id="profile-title" placeholder="UI/UX Designer & Web Developer"></div>
+                <div class="col-12"><label class="form-label">Tagline</label><input type="text" class="form-control" id="profile-tagline"></div>
+                <div class="col-12"><label class="form-label">Typed roles (comma separated)</label><input type="text" class="form-control" id="profile-typed-roles" placeholder="Designer, Developer, Freelancer"></div>
+                <div class="col-12"><label class="form-label">About section intro</label><textarea class="form-control" id="profile-about-intro" rows="2"></textarea></div>
+                <div class="col-12"><label class="form-label">About section text</label><textarea class="form-control" id="profile-about-text" rows="4"></textarea></div>
+                <div class="col-md-6"><label class="form-label">Profile photo</label><input type="file" class="form-control" id="profile-image-upload" accept="image/*"><div id="profile-image-preview" class="upload-preview mt-2"></div></div>
+                <div class="col-md-6"><label class="form-label">Hero background</label><input type="file" class="form-control" id="hero-bg-upload" accept="image/*"><div id="hero-bg-preview" class="upload-preview mt-2"></div></div>
+                <div class="col-md-6"><label class="form-label">Birthday</label><input type="text" class="form-control" id="profile-birthday"></div>
+                <div class="col-md-6"><label class="form-label">Age</label><input type="text" class="form-control" id="profile-age"></div>
+                <div class="col-md-6"><label class="form-label">Website</label><input type="text" class="form-control" id="profile-website"></div>
+                <div class="col-md-6"><label class="form-label">Phone</label><input type="text" class="form-control" id="profile-phone"></div>
+                <div class="col-md-6"><label class="form-label">City</label><input type="text" class="form-control" id="profile-city"></div>
+                <div class="col-md-6"><label class="form-label">Degree</label><input type="text" class="form-control" id="profile-degree"></div>
+                <div class="col-md-6"><label class="form-label">Email</label><input type="email" class="form-control" id="profile-email"></div>
+                <div class="col-md-6"><label class="form-label">Freelance status</label><input type="text" class="form-control" id="profile-freelance" placeholder="Available"></div>
+                <div class="col-12"><hr><h4 class="h6">Social links</h4></div>
+                <div class="col-md-6"><label class="form-label">Twitter / X URL</label><input type="url" class="form-control" id="profile-twitter"></div>
+                <div class="col-md-6"><label class="form-label">Facebook URL</label><input type="url" class="form-control" id="profile-facebook"></div>
+                <div class="col-md-6"><label class="form-label">Instagram URL</label><input type="url" class="form-control" id="profile-instagram"></div>
+                <div class="col-md-6"><label class="form-label">Skype URL</label><input type="url" class="form-control" id="profile-skype"></div>
+                <div class="col-md-6"><label class="form-label">LinkedIn URL</label><input type="url" class="form-control" id="profile-linkedin"></div>
+                <div class="col-12"><button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> Save Profile</button></div>
+              </div>
+            </form>
           </div>
         </div>
 
@@ -194,6 +227,7 @@
               <strong>GitHub Pages:</strong> Export JSON files below, replace files in <code>data/</code>, then push to GitHub so everyone sees your updates.
             </div>
             <button id="export-projects" class="btn btn-primary me-2 mb-2"><i class="bi bi-download"></i> Export projects.json</button>
+            <button id="export-profile" class="btn btn-primary me-2 mb-2"><i class="bi bi-download"></i> Export profile.json</button>
             <button id="export-services" class="btn btn-primary me-2 mb-2"><i class="bi bi-download"></i> Export services.json</button>
             <button id="export-resume" class="btn btn-primary me-2 mb-2"><i class="bi bi-download"></i> Export resume.json</button>
             <button id="export-messages" class="btn btn-primary mb-2"><i class="bi bi-download"></i> Export messages.json</button>
@@ -201,6 +235,7 @@
           <div class="admin-card">
             <h3>Import JSON</h3>
             <div class="mb-3"><label class="form-label">Import projects.json</label><input type="file" class="form-control" id="import-projects" accept=".json"></div>
+            <div class="mb-3"><label class="form-label">Import profile.json</label><input type="file" class="form-control" id="import-profile" accept=".json"></div>
             <div class="mb-3"><label class="form-label">Import services.json</label><input type="file" class="form-control" id="import-services" accept=".json"></div>
             <div class="mb-3"><label class="form-label">Import resume.json</label><input type="file" class="form-control" id="import-resume" accept=".json"></div>
             <div class="mb-3"><label class="form-label">Import messages.json</label><input type="file" class="form-control" id="import-messages" accept=".json"></div>
@@ -217,6 +252,7 @@
 
   <script src="../assets/js/config.js"></script>
   <script src="../assets/js/data-store.js"></script>
+  <script src="../assets/js/admin-profile.js"></script>
   <script src="../assets/js/admin.js"></script>
 </body>
 </html>

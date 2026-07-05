@@ -1,0 +1,27 @@
+{
+  "name": "Alex Smith",
+  "title": "UI/UX Designer & Web Developer",
+  "tagline": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  "typedRoles": ["Designer", "Developer", "Freelancer", "Photographer"],
+  "aboutIntro": "Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem.",
+  "aboutText": "Officiis eligendi itaque labore et dolorum mollitia officiis optio vero. Quisquam sunt adipisci omnis et ut. Nulla accusantium dolor incidunt officia tempore.",
+  "profileImage": "assets/img/my-profile-img.jpg",
+  "heroBackground": "assets/img/hero-bg.jpg",
+  "details": {
+    "birthday": "1 May 1995",
+    "website": "www.example.com",
+    "phone": "+123 456 7890",
+    "city": "New York, USA",
+    "age": "30",
+    "degree": "Master",
+    "email": "email@example.com",
+    "freelance": "Available"
+  },
+  "social": {
+    "twitter": "",
+    "facebook": "",
+    "instagram": "",
+    "skype": "",
+    "linkedin": ""
+  }
+}

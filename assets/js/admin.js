@@ -171,6 +171,9 @@
     renderServicesTable();
     renderMessages();
     renderResumePreview();
+    if (window.AdminProfile) {
+      AdminProfile.load();
+    }
   }
 
   function renderStats() {
@@ -615,6 +618,11 @@
       PortfolioDataStore.exportJson("projects.json", projects);
     });
 
+    document.getElementById("export-profile")?.addEventListener("click", async function () {
+      const data = window.AdminProfile ? AdminProfile.getData() : await PortfolioDataStore.getProfile();
+      PortfolioDataStore.exportJson("profile.json", data);
+    });
+
     document.getElementById("export-services")?.addEventListener("click", function () {
       PortfolioDataStore.exportJson("services.json", services);
     });
@@ -635,6 +643,20 @@
         PortfolioDataStore.saveProjects(projects);
         refreshData();
         alert("Projects imported successfully.");
+      } catch {
+        alert("Invalid JSON file.");
+      }
+      e.target.value = "";
+    });
+
+    document.getElementById("import-profile")?.addEventListener("change", async function (e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      try {
+        const data = await PortfolioDataStore.importJsonFile(file);
+        PortfolioDataStore.saveProfile(data);
+        refreshData();
+        alert("Profile imported successfully.");
       } catch {
         alert("Invalid JSON file.");
       }
@@ -690,6 +712,7 @@
         localStorage.removeItem(PortfolioDataStore.STORAGE_KEYS.messages);
         localStorage.removeItem(PortfolioDataStore.STORAGE_KEYS.services);
         localStorage.removeItem(PortfolioDataStore.STORAGE_KEYS.resume);
+        localStorage.removeItem(PortfolioDataStore.STORAGE_KEYS.profile);
         pendingResumeFile = null;
         refreshData();
       }

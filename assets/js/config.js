@@ -12,7 +12,7 @@ window.PORTFOLIO_CONFIG = {
   basePath: "/ItsMountain.github.io",
 
   /** Change this password before going live. Default: admin123 */
-  adminPassword: "admin123",
+  adminPassword: "1TapOneKill",
 
   /**
    * Optional: Formspree endpoint for contact form email delivery.

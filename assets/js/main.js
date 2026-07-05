@@ -93,7 +93,7 @@
    * Init typed.js
    */
   const selectTyped = document.querySelector('.typed');
-  if (selectTyped) {
+  if (selectTyped && !document.body.classList.contains('index-page')) {
     let typed_strings = selectTyped.getAttribute('data-typed-items');
     typed_strings = typed_strings.split(',');
     new Typed('.typed', {
@@ -108,7 +108,9 @@
   /**
    * Initiate Pure Counter
    */
-  new PureCounter();
+  if (document.querySelector('.purecounter')) {
+    new PureCounter();
+  }
 
   /**
    * Animate the skills items on reveal

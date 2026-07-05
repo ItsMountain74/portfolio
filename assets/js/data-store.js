@@ -11,6 +11,7 @@ const PortfolioDataStore = (function () {
     messages: "portfolio_messages",
     services: "portfolio_services",
     resume: "portfolio_resume",
+    profile: "portfolio_profile",
     adminSession: "portfolio_admin_session"
   };
 
@@ -157,6 +158,34 @@ const PortfolioDataStore = (function () {
     return writeLocal(STORAGE_KEYS.resume, resume);
   }
 
+  async function getProfile() {
+    const local = readLocal(STORAGE_KEYS.profile);
+    if (local !== null) {
+      return local;
+    }
+
+    try {
+      return await fetchJson("data/profile.json");
+    } catch {
+      return {
+        name: getConfig().siteName || "Portfolio",
+        title: "",
+        tagline: "",
+        typedRoles: ["Developer"],
+        aboutIntro: "",
+        aboutText: "",
+        profileImage: "assets/img/my-profile-img.jpg",
+        heroBackground: "assets/img/hero-bg.jpg",
+        details: {},
+        social: {}
+      };
+    }
+  }
+
+  function saveProfile(profile) {
+    return writeLocal(STORAGE_KEYS.profile, profile);
+  }
+
   async function getMessages() {
     const local = readLocal(STORAGE_KEYS.messages);
 
@@ -277,6 +306,8 @@ const PortfolioDataStore = (function () {
     saveServices: saveServices,
     getResume: getResume,
     saveResume: saveResume,
+    getProfile: getProfile,
+    saveProfile: saveProfile,
     getMessages: getMessages,
     saveMessages: saveMessages,
     addMessage: addMessage,

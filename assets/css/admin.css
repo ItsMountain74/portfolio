@@ -170,9 +170,13 @@ body.admin-page {
   border: 1px solid #ddd;
 }
 
-.upload-preview .upload-preview-item img {
-  width: 160px;
-  height: 120px;
+#hero-bg-preview img,
+#profile-image-preview img {
+  width: 100%;
+  max-width: 240px;
+  height: auto;
+  border-radius: 8px;
+  border: 1px solid #ddd;
 }
 
 .resume-preview iframe {
