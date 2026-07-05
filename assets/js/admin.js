@@ -162,10 +162,10 @@
   }
 
   async function refreshData() {
-    projects = await PortfolioDataStore.getProjects(true);
-    services = await PortfolioDataStore.getServices(true);
-    messages = await PortfolioDataStore.getMessages(true);
-    resume = await PortfolioDataStore.getResume(true);
+    projects = await PortfolioDataStore.getProjects();
+    services = await PortfolioDataStore.getServices();
+    messages = await PortfolioDataStore.getMessages();
+    resume = await PortfolioDataStore.getResume();
     renderStats();
     renderProjectsTable();
     renderServicesTable();
@@ -464,6 +464,7 @@
       resetProjectForm();
       refreshData();
       showPanel("panel-projects");
+      alert("Project saved. Refresh the homepage to see changes (same browser). Export JSON to publish on GitHub.");
     });
 
     document.getElementById("cancel-edit")?.addEventListener("click", resetProjectForm);
@@ -491,6 +492,7 @@
       resetServiceForm();
       refreshData();
       showPanel("panel-services");
+      alert("Service saved. Refresh the homepage to see changes (same browser). Export JSON to publish on GitHub.");
     });
 
     document.getElementById("cancel-service-edit")?.addEventListener("click", resetServiceForm);
@@ -533,7 +535,14 @@
           fileData: await readFileAsDataUrl(file),
           updatedAt: new Date().toISOString()
         };
+        resume = pendingResumeFile;
+        pendingResumeFile = null;
+        if (!PortfolioDataStore.saveResume(resume)) {
+          alert("Could not save resume — file may be too large for browser storage.");
+          return;
+        }
         renderResumePreview();
+        alert("Resume saved. Open the homepage in this browser to preview it.");
       } catch {
         alert("Could not read resume file.");
       }

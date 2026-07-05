@@ -79,4 +79,8 @@
   }
 
   window.addEventListener("load", loadProjects);
+
+  PortfolioDataStore.onDataChange(function () {
+    loadProjects();
+  });
 })();

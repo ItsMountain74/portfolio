@@ -81,4 +81,8 @@
   }
 
   window.addEventListener("load", loadResume);
+
+  PortfolioDataStore.onDataChange(function () {
+    loadResume();
+  });
 })();

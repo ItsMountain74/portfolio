@@ -1,6 +1,7 @@
 /**
  * Data store for GitHub Pages static portfolio.
- * Loads JSON from repo, merges with localStorage for admin edits.
+ * Admin saves to localStorage; the public site reads localStorage first (same browser),
+ * then falls back to data/*.json files from the repo.
  */
 const PortfolioDataStore = (function () {
   "use strict";
@@ -12,6 +13,8 @@ const PortfolioDataStore = (function () {
     resume: "portfolio_resume",
     adminSession: "portfolio_admin_session"
   };
+
+  const EMPTY_RESUME = { fileName: "", fileType: "", fileData: "", updatedAt: "" };
 
   function getConfig() {
     return window.PORTFOLIO_CONFIG || {};
@@ -78,80 +81,91 @@ const PortfolioDataStore = (function () {
   function readLocal(key) {
     try {
       const raw = localStorage.getItem(key);
-      return raw ? JSON.parse(raw) : null;
+      if (raw === null) return null;
+      return JSON.parse(raw);
     } catch {
       return null;
     }
   }
 
   function writeLocal(key, data) {
-    localStorage.setItem(key, JSON.stringify(data));
+    try {
+      localStorage.setItem(key, JSON.stringify(data));
+      return true;
+    } catch (err) {
+      console.error("localStorage save failed:", err);
+      if (err && err.name === "QuotaExceededError") {
+        alert("Storage is full. Export your JSON files and use smaller images, or clear old data from the admin panel.");
+      }
+      return false;
+    }
   }
 
-  async function getProjects(useLocalOverride) {
+  async function getProjects() {
     const local = readLocal(STORAGE_KEYS.projects);
-
-    if (useLocalOverride && local) {
+    if (local !== null) {
       return local;
     }
 
     try {
       return await fetchJson("data/projects.json");
     } catch {
-      return local || [];
+      return [];
     }
   }
 
   function saveProjects(projects) {
-    writeLocal(STORAGE_KEYS.projects, projects);
+    return writeLocal(STORAGE_KEYS.projects, projects);
   }
 
-  async function getServices(useLocalOverride) {
+  async function getServices() {
     const local = readLocal(STORAGE_KEYS.services);
-    if (useLocalOverride && local) {
+    if (local !== null) {
       return local;
     }
+
     try {
       return await fetchJson("data/services.json");
     } catch {
-      return local || [];
+      return [];
     }
   }
 
   function saveServices(services) {
-    writeLocal(STORAGE_KEYS.services, services);
+    return writeLocal(STORAGE_KEYS.services, services);
   }
 
-  async function getResume(useLocalOverride) {
+  async function getResume() {
     const local = readLocal(STORAGE_KEYS.resume);
-    if (useLocalOverride && local) {
+    if (local && local.fileData) {
       return local;
     }
+
     try {
-      return await fetchJson("data/resume.json");
+      const remote = await fetchJson("data/resume.json");
+      if (remote && remote.fileData) {
+        return remote;
+      }
     } catch {
-      return local || { fileName: "", fileType: "", fileData: "", updatedAt: "" };
+      /* fall through */
     }
+
+    return local || EMPTY_RESUME;
   }
 
   function saveResume(resume) {
-    writeLocal(STORAGE_KEYS.resume, resume);
+    return writeLocal(STORAGE_KEYS.resume, resume);
   }
 
-  async function getMessages(useLocalOverride) {
+  async function getMessages() {
     const local = readLocal(STORAGE_KEYS.messages);
-    if (useLocalOverride && local) {
-      return local;
-    }
 
     try {
       const remote = await fetchJson("data/messages.json");
-      if (!local) {
-        return remote;
+      if (local !== null) {
+        return mergeMessages(remote, local);
       }
-
-      const merged = mergeMessages(remote, local);
-      return merged;
+      return remote;
     } catch {
       return local || [];
     }
@@ -173,11 +187,11 @@ const PortfolioDataStore = (function () {
   }
 
   function saveMessages(messages) {
-    writeLocal(STORAGE_KEYS.messages, messages);
+    return writeLocal(STORAGE_KEYS.messages, messages);
   }
 
   async function addMessage(message) {
-    const messages = await getMessages(true);
+    const messages = await getMessages();
     const entry = {
       id: "msg_" + Date.now() + "_" + Math.random().toString(36).slice(2, 8),
       name: message.name,
@@ -244,6 +258,13 @@ const PortfolioDataStore = (function () {
     return slugify(title) + "-" + Date.now().toString(36);
   }
 
+  function onDataChange(callback) {
+    window.addEventListener("storage", function (event) {
+      if (!event.key || !event.key.startsWith("portfolio_")) return;
+      callback(event.key);
+    });
+  }
+
   return {
     STORAGE_KEYS: STORAGE_KEYS,
     detectBasePath: detectBasePath,
@@ -265,7 +286,8 @@ const PortfolioDataStore = (function () {
     adminLogin: adminLogin,
     adminLogout: adminLogout,
     generateId: generateId,
-    slugify: slugify
+    slugify: slugify,
+    onDataChange: onDataChange
   };
 })();
 

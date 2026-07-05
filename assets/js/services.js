@@ -59,4 +59,8 @@
   }
 
   window.addEventListener("load", loadServices);
+
+  PortfolioDataStore.onDataChange(function () {
+    loadServices();
+  });
 })();
