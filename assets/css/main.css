@@ -1273,3 +1273,29 @@ section,
 .starter-section {
   /* Add your styles here */
 }
+
+/*--------------------------------------------------------------
+# Dynamic Resume Viewer
+--------------------------------------------------------------*/
+.resume .resume-viewer iframe {
+  width: 100%;
+  min-height: 720px;
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 85%);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.resume .resume-file-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem;
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 85%);
+  border-radius: 8px;
+  background: var(--surface-color);
+}
+
+.resume .resume-file-card i {
+  font-size: 2rem;
+  color: var(--accent-color);
+}

@@ -1,0 +1,30 @@
+[
+  {
+    "id": "web-development",
+    "title": "Web Development",
+    "description": "Responsive websites and web apps built with modern HTML, CSS, JavaScript, and performance best practices.",
+    "icon": "bi-briefcase",
+    "published": true
+  },
+  {
+    "id": "mobile-apps",
+    "title": "Mobile Apps",
+    "description": "Cross-platform mobile applications for iOS and Android with polished UI and smooth user experience.",
+    "icon": "bi-phone",
+    "published": true
+  },
+  {
+    "id": "ui-ux-design",
+    "title": "UI/UX Design",
+    "description": "User-centered interface design, wireframes, and prototypes that balance aesthetics with usability.",
+    "icon": "bi-palette",
+    "published": true
+  },
+  {
+    "id": "consulting",
+    "title": "Technical Consulting",
+    "description": "Architecture reviews, code audits, and guidance to help teams ship reliable digital products faster.",
+    "icon": "bi-lightbulb",
+    "published": true
+  }
+]

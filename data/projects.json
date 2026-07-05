@@ -2,8 +2,6 @@
   {
     "id": "mobile-task-app",
     "title": "TaskFlow Mobile",
-    "category": "app",
-    "categoryLabel": "App",
     "shortDescription": "Cross-platform productivity app for teams",
     "description": "TaskFlow is a mobile productivity application built with Flutter. It helps teams organize tasks, track deadlines, and collaborate in real time with offline support and push notifications.",
     "thumbnail": "assets/img/portfolio/app-1.jpg",
@@ -24,8 +22,6 @@
   {
     "id": "ecommerce-platform",
     "title": "ShopWave",
-    "category": "web",
-    "categoryLabel": "Web",
     "shortDescription": "Modern e-commerce web platform",
     "description": "ShopWave is a responsive e-commerce website with product catalog, cart, and checkout. Built with modern web standards and optimized for performance and SEO.",
     "thumbnail": "assets/img/portfolio/product-1.jpg",
@@ -45,8 +41,6 @@
   {
     "id": "brand-identity",
     "title": "Nova Branding",
-    "category": "branding",
-    "categoryLabel": "Branding",
     "shortDescription": "Complete brand identity and design system",
     "description": "A full brand identity package including logo design, color palette, typography, and marketing collateral for a tech startup.",
     "thumbnail": "assets/img/portfolio/branding-1.jpg",

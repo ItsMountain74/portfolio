@@ -71,7 +71,7 @@
         '<div class="text-center py-5">' +
           "<h2>Project not found</h2>" +
           '<p class="text-muted">The project you are looking for does not exist or was removed.</p>' +
-          '<a href="' + escapeHtml(PortfolioDataStore.pageUrl("index.html#portfolio")) + '" class="btn btn-primary">Back to Portfolio</a>' +
+          '<a href="' + escapeHtml(PortfolioDataStore.pageUrl("index.html#projects")) + '" class="btn btn-primary">Back to Projects</a>' +
         "</div>" +
       "</div>";
   }
@@ -115,7 +115,6 @@
             '<div class="portfolio-info" data-aos="fade-up" data-aos-delay="200">' +
               "<h3>Project information</h3>" +
               "<ul>" +
-                "<li><strong>Category</strong>: " + escapeHtml(project.categoryLabel || project.category) + "</li>" +
                 "<li><strong>Client</strong>: " + escapeHtml(project.client || "—") + "</li>" +
                 "<li><strong>Project date</strong>: " + escapeHtml(formatDate(project.projectDate)) + "</li>" +
                 renderLinks(project.links) +

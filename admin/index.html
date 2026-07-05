@@ -36,6 +36,9 @@
           <a href="#" data-panel="panel-overview" class="active"><i class="bi bi-grid"></i> Overview</a>
           <a href="#" data-panel="panel-projects"><i class="bi bi-folder"></i> Projects</a>
           <a href="#" data-panel="panel-add-project"><i class="bi bi-plus-circle"></i> Add Project</a>
+          <a href="#" data-panel="panel-services"><i class="bi bi-hdd-stack"></i> Services</a>
+          <a href="#" data-panel="panel-add-service"><i class="bi bi-plus-square"></i> Add Service</a>
+          <a href="#" data-panel="panel-resume"><i class="bi bi-file-earmark-person"></i> Resume</a>
           <a href="#" data-panel="panel-messages"><i class="bi bi-envelope"></i> Messages</a>
           <a href="#" data-panel="panel-data"><i class="bi bi-database"></i> Data & Export</a>
         </nav>
@@ -52,15 +55,17 @@
 
         <div id="panel-overview" class="admin-panel active">
           <div class="row g-3">
-            <div class="col-md-4"><div class="admin-card admin-stat"><div class="number" id="stat-projects">0</div><div class="label">Projects</div></div></div>
-            <div class="col-md-4"><div class="admin-card admin-stat"><div class="number" id="stat-messages">0</div><div class="label">Messages</div></div></div>
-            <div class="col-md-4"><div class="admin-card admin-stat"><div class="number" id="stat-unread">0</div><div class="label">Unread</div></div></div>
+            <div class="col-md-3"><div class="admin-card admin-stat"><div class="number" id="stat-projects">0</div><div class="label">Projects</div></div></div>
+            <div class="col-md-3"><div class="admin-card admin-stat"><div class="number" id="stat-services">0</div><div class="label">Services</div></div></div>
+            <div class="col-md-3"><div class="admin-card admin-stat"><div class="number" id="stat-messages">0</div><div class="label">Messages</div></div></div>
+            <div class="col-md-3"><div class="admin-card admin-stat"><div class="number" id="stat-unread">0</div><div class="label">Unread</div></div></div>
           </div>
           <div class="admin-card">
             <h3>Quick Start</h3>
             <ol class="mb-0">
               <li>Add or edit projects under <strong>Projects</strong> or <strong>Add Project</strong></li>
-              <li>Upload screenshots to <code>assets/img/portfolio/</code> and reference their paths</li>
+              <li>Upload your resume PDF or document under <strong>Resume</strong></li>
+              <li>Manage services under <strong>Services</strong></li>
               <li>Export JSON files from <strong>Data & Export</strong> and commit them to GitHub</li>
               <li>Change the admin password in <code>assets/js/config.js</code></li>
             </ol>
@@ -75,7 +80,7 @@
             </div>
             <div class="table-responsive">
               <table class="table admin-table">
-                <thead><tr><th></th><th>Project</th><th>Category</th><th>Status</th><th>Actions</th></tr></thead>
+                <thead><tr><th></th><th>Project</th><th>Status</th><th>Actions</th></tr></thead>
                 <tbody id="projects-table-body"></tbody>
               </table>
             </div>
@@ -90,13 +95,19 @@
               <div class="row g-3">
                 <div class="col-md-8"><label class="form-label">Title *</label><input type="text" class="form-control" id="project-title" required></div>
                 <div class="col-md-4"><label class="form-label">Project Date</label><input type="date" class="form-control" id="project-date"></div>
-                <div class="col-md-4"><label class="form-label">Category ID</label><input type="text" class="form-control" id="project-category" placeholder="app, web, branding"></div>
-                <div class="col-md-4"><label class="form-label">Category Label</label><input type="text" class="form-control" id="project-category-label" placeholder="App, Web, Branding"></div>
-                <div class="col-md-4"><label class="form-label">Client</label><input type="text" class="form-control" id="project-client"></div>
+                <div class="col-md-6"><label class="form-label">Client</label><input type="text" class="form-control" id="project-client"></div>
                 <div class="col-12"><label class="form-label">Short Description</label><input type="text" class="form-control" id="project-short-desc"></div>
                 <div class="col-12"><label class="form-label">Full Description</label><textarea class="form-control" id="project-desc" rows="4"></textarea></div>
-                <div class="col-12"><label class="form-label">Thumbnail Path *</label><input type="text" class="form-control" id="project-thumbnail" placeholder="assets/img/portfolio/app-1.jpg" required></div>
-                <div class="col-12"><label class="form-label">Screenshots (one path per line)</label><textarea class="form-control" id="project-screenshots" rows="4" placeholder="assets/img/portfolio/app-1.jpg"></textarea><div id="screenshots-preview" class="screenshot-preview"></div></div>
+                <div class="col-md-6">
+                  <label class="form-label">Thumbnail *</label>
+                  <input type="file" class="form-control" id="project-thumbnail-upload" accept="image/*">
+                  <div id="thumbnail-preview" class="upload-preview mt-2"></div>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Screenshots</label>
+                  <input type="file" class="form-control" id="project-screenshots-upload" accept="image/*" multiple>
+                  <div id="screenshots-preview" class="screenshot-preview mt-2"></div>
+                </div>
                 <div class="col-md-4"><label class="form-label">Website URL</label><input type="url" class="form-control" id="project-website" placeholder="https://"></div>
                 <div class="col-md-4"><label class="form-label">App Store URL</label><input type="url" class="form-control" id="project-appstore" placeholder="https://apps.apple.com/"></div>
                 <div class="col-md-4"><label class="form-label">Google Play URL</label><input type="url" class="form-control" id="project-playstore" placeholder="https://play.google.com/"></div>
@@ -107,6 +118,63 @@
                 </div>
               </div>
             </form>
+          </div>
+        </div>
+
+        <div id="panel-services" class="admin-panel">
+          <div class="admin-card">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h3 class="mb-0">All Services</h3>
+              <button class="btn btn-primary btn-sm" id="goto-add-service"><i class="bi bi-plus"></i> Add New</button>
+            </div>
+            <div class="table-responsive">
+              <table class="table admin-table">
+                <thead><tr><th>Icon</th><th>Service</th><th>Status</th><th>Actions</th></tr></thead>
+                <tbody id="services-table-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div id="panel-add-service" class="admin-panel">
+          <div class="admin-card">
+            <h3 id="service-form-title">Add Service</h3>
+            <form id="service-form">
+              <input type="hidden" id="service-id">
+              <div class="row g-3">
+                <div class="col-md-8"><label class="form-label">Title *</label><input type="text" class="form-control" id="service-title" required></div>
+                <div class="col-md-4"><label class="form-label">Icon class</label><input type="text" class="form-control" id="service-icon" placeholder="bi-briefcase" value="bi-briefcase"><small class="text-muted">Bootstrap Icons name, e.g. bi-phone</small></div>
+                <div class="col-12"><label class="form-label">Description *</label><textarea class="form-control" id="service-description" rows="4" required></textarea></div>
+                <div class="col-12"><div class="form-check"><input class="form-check-input" type="checkbox" id="service-published" checked><label class="form-check-label" for="service-published">Published (visible on site)</label></div></div>
+                <div class="col-12">
+                  <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> Save Service</button>
+                  <button type="button" id="cancel-service-edit" class="btn btn-outline-secondary ms-2">Cancel</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div id="panel-resume" class="admin-panel">
+          <div class="admin-card">
+            <h3>Resume File</h3>
+            <p class="text-muted">Upload a PDF, DOC, or DOCX file. PDF files can be previewed on the site.</p>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Upload resume</label>
+                <input type="file" class="form-control" id="resume-upload" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+                <div class="mt-3">
+                  <button type="button" id="save-resume" class="btn btn-primary"><i class="bi bi-save"></i> Save Resume</button>
+                  <button type="button" id="remove-resume" class="btn btn-outline-danger ms-2"><i class="bi bi-trash"></i> Remove</button>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Preview</label>
+                <div id="resume-preview" class="resume-preview">
+                  <p class="text-muted small mb-0">No resume uploaded yet.</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -121,13 +189,17 @@
         <div id="panel-data" class="admin-panel">
           <div class="admin-card">
             <h3>Export for GitHub Pages</h3>
-            <p class="text-muted">After making changes, export these files and replace <code>data/projects.json</code> and <code>data/messages.json</code> in your repo, then push to GitHub.</p>
+            <p class="text-muted">After making changes, export these files and replace them in your repo, then push to GitHub.</p>
             <button id="export-projects" class="btn btn-primary me-2 mb-2"><i class="bi bi-download"></i> Export projects.json</button>
+            <button id="export-services" class="btn btn-primary me-2 mb-2"><i class="bi bi-download"></i> Export services.json</button>
+            <button id="export-resume" class="btn btn-primary me-2 mb-2"><i class="bi bi-download"></i> Export resume.json</button>
             <button id="export-messages" class="btn btn-primary mb-2"><i class="bi bi-download"></i> Export messages.json</button>
           </div>
           <div class="admin-card">
             <h3>Import JSON</h3>
             <div class="mb-3"><label class="form-label">Import projects.json</label><input type="file" class="form-control" id="import-projects" accept=".json"></div>
+            <div class="mb-3"><label class="form-label">Import services.json</label><input type="file" class="form-control" id="import-services" accept=".json"></div>
+            <div class="mb-3"><label class="form-label">Import resume.json</label><input type="file" class="form-control" id="import-resume" accept=".json"></div>
             <div class="mb-3"><label class="form-label">Import messages.json</label><input type="file" class="form-control" id="import-messages" accept=".json"></div>
           </div>
           <div class="admin-card">

@@ -8,6 +8,8 @@ const PortfolioDataStore = (function () {
   const STORAGE_KEYS = {
     projects: "portfolio_projects",
     messages: "portfolio_messages",
+    services: "portfolio_services",
+    resume: "portfolio_resume",
     adminSession: "portfolio_admin_session"
   };
 
@@ -102,6 +104,38 @@ const PortfolioDataStore = (function () {
 
   function saveProjects(projects) {
     writeLocal(STORAGE_KEYS.projects, projects);
+  }
+
+  async function getServices(useLocalOverride) {
+    const local = readLocal(STORAGE_KEYS.services);
+    if (useLocalOverride && local) {
+      return local;
+    }
+    try {
+      return await fetchJson("data/services.json");
+    } catch {
+      return local || [];
+    }
+  }
+
+  function saveServices(services) {
+    writeLocal(STORAGE_KEYS.services, services);
+  }
+
+  async function getResume(useLocalOverride) {
+    const local = readLocal(STORAGE_KEYS.resume);
+    if (useLocalOverride && local) {
+      return local;
+    }
+    try {
+      return await fetchJson("data/resume.json");
+    } catch {
+      return local || { fileName: "", fileType: "", fileData: "", updatedAt: "" };
+    }
+  }
+
+  function saveResume(resume) {
+    writeLocal(STORAGE_KEYS.resume, resume);
   }
 
   async function getMessages(useLocalOverride) {
@@ -218,6 +252,10 @@ const PortfolioDataStore = (function () {
     pageUrl: pageUrl,
     getProjects: getProjects,
     saveProjects: saveProjects,
+    getServices: getServices,
+    saveServices: saveServices,
+    getResume: getResume,
+    saveResume: saveResume,
     getMessages: getMessages,
     saveMessages: saveMessages,
     addMessage: addMessage,
