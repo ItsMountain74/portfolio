@@ -6,8 +6,9 @@ Dynamic portfolio with admin dashboard for managing projects, screenshots, store
 
 | Page | URL |
 |------|-----|
-| Homepage | `/index.html` |
-| Admin Dashboard | `/admin/` |
+| Homepage | `https://itsmountain74.github.io/ItsMountain.github.io/` |
+| Admin Dashboard | `https://itsmountain74.github.io/ItsMountain.github.io/admin/` |
+| Admin (alt) | `https://itsmountain74.github.io/ItsMountain.github.io/admin.html` |
 | Project Details | `/portfolio-details.html?id={project-id}` |
 
 See **[ROUTES.md](ROUTES.md)** for full route documentation.
