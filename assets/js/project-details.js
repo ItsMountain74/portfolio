@@ -34,38 +34,65 @@
     }
   }
 
-  function renderLinks(links) {
-    if (!links) return "";
-
-    const items = [];
-    if (links.website) {
-      items.push('<li><strong>Website</strong>: <a href="' + escapeHtml(links.website) + '" target="_blank" rel="noopener">' + escapeHtml(links.website) + "</a></li>");
-    }
-    if (links.appStore) {
-      items.push('<li><strong>App Store</strong>: <a href="' + escapeHtml(links.appStore) + '" target="_blank" rel="noopener"><i class="bi bi-apple"></i> Download on App Store</a></li>');
-    }
-    if (links.playStore) {
-      items.push('<li><strong>Google Play</strong>: <a href="' + escapeHtml(links.playStore) + '" target="_blank" rel="noopener"><i class="bi bi-google-play"></i> Get it on Google Play</a></li>');
-    }
-    return items.join("");
+  /** Only renders a row when there is something real to show. */
+  function infoRow(label, value) {
+    if (!value) return "";
+    return "<li><strong>" + escapeHtml(label) + "</strong>: " + escapeHtml(value) + "</li>";
   }
 
-  function renderDownloadButtons(links) {
-    if (!links) return "";
+  function renderDownloadButtons(project) {
+    const links = project.links || {};
     const buttons = [];
+    const title = project.title || "this project";
 
     if (links.website) {
-      buttons.push('<a href="' + escapeHtml(links.website) + '" class="btn btn-primary me-2 mb-2" target="_blank" rel="noopener"><i class="bi bi-globe"></i> Visit Website</a>');
-    }
-    if (links.appStore) {
-      buttons.push('<a href="' + escapeHtml(links.appStore) + '" class="btn btn-dark me-2 mb-2" target="_blank" rel="noopener"><i class="bi bi-apple"></i> App Store</a>');
+      buttons.push(
+        '<a href="' + escapeHtml(links.website) + '" class="btn btn-primary me-2 mb-2" target="_blank" rel="noopener noreferrer"' +
+        ' aria-label="Visit the ' + escapeHtml(title) + ' website (opens in a new tab)">' +
+        '<i class="bi bi-globe" aria-hidden="true"></i> Visit Website</a>'
+      );
     }
     if (links.playStore) {
-      buttons.push('<a href="' + escapeHtml(links.playStore) + '" class="btn btn-success me-2 mb-2" target="_blank" rel="noopener"><i class="bi bi-google-play"></i> Google Play</a>');
+      buttons.push(
+        '<a href="' + escapeHtml(links.playStore) + '" class="btn btn-success me-2 mb-2" target="_blank" rel="noopener noreferrer"' +
+        ' aria-label="Get ' + escapeHtml(title) + ' on Google Play (opens in a new tab)">' +
+        '<i class="bi bi-google-play" aria-hidden="true"></i> Google Play</a>'
+      );
+    }
+    if (links.appStore) {
+      buttons.push(
+        '<a href="' + escapeHtml(links.appStore) + '" class="btn btn-dark me-2 mb-2" target="_blank" rel="noopener noreferrer"' +
+        ' aria-label="Download ' + escapeHtml(title) + ' on the App Store (opens in a new tab)">' +
+        '<i class="bi bi-apple" aria-hidden="true"></i> App Store</a>'
+      );
     }
 
-    if (buttons.length === 0) return "";
+    if (buttons.length === 0) {
+      return '<p class="project-no-links">This project is not publicly available to browse.</p>';
+    }
     return '<div class="project-links mt-3">' + buttons.join("") + "</div>";
+  }
+
+  function renderTagList(title, items) {
+    if (!items || items.length === 0) return "";
+    return (
+      '<div class="portfolio-detail-block">' +
+        "<h3>" + escapeHtml(title) + "</h3>" +
+        '<ul class="portfolio-tags">' +
+          items.map(function (item) { return "<li>" + escapeHtml(item) + "</li>"; }).join("") +
+        "</ul>" +
+      "</div>"
+    );
+  }
+
+  function renderTextBlock(title, text) {
+    if (!text) return "";
+    return (
+      '<div class="portfolio-detail-block">' +
+        "<h3>" + escapeHtml(title) + "</h3>" +
+        "<p>" + escapeHtml(text) + "</p>" +
+      "</div>"
+    );
   }
 
   function renderNotFound() {
@@ -82,12 +109,34 @@
   function renderProject(project) {
     const screenshots = (project.screenshots && project.screenshots.length)
       ? project.screenshots
-      : [project.thumbnail];
+      : [project.thumbnail].filter(Boolean);
 
-    const slides = screenshots.map(function (src) {
-      const url = PortfolioDataStore.assetUrl(src);
-      return '<div class="swiper-slide"><img src="' + escapeHtml(url) + '" alt="' + escapeHtml(project.title) + '"></div>';
-    }).join("");
+    const alt = project.title + " — " + (project.shortDescription || project.category || "project");
+
+    // A one-image project does not need a carousel; render it as a plain figure.
+    const media = screenshots.length > 1
+      ? '<div class="portfolio-details-slider swiper init-swiper">' +
+          '<script type="application/json" class="swiper-config">' +
+            JSON.stringify({
+              loop: true,
+              speed: 600,
+              autoplay: { delay: 5000 },
+              slidesPerView: "auto",
+              pagination: { el: ".swiper-pagination", type: "bullets", clickable: true }
+            }) +
+          "<\/script>" +
+          '<div class="swiper-wrapper align-items-center">' +
+            screenshots.map(function (src) {
+              return '<div class="swiper-slide"><img src="' + escapeHtml(PortfolioDataStore.assetUrl(src)) +
+                '" alt="' + escapeHtml(alt) + '"></div>';
+            }).join("") +
+          "</div>" +
+          '<div class="swiper-pagination"></div>' +
+        "</div>"
+      : '<figure class="portfolio-details-figure">' +
+          '<img src="' + escapeHtml(PortfolioDataStore.assetUrl(screenshots[0] || "")) +
+            '" alt="' + escapeHtml(alt) + '" width="1000" height="625" decoding="async">' +
+        "</figure>";
 
     document.title = project.title + " - Portfolio";
     const pageTitle = document.querySelector(".page-title h1");
@@ -96,37 +145,31 @@
     const breadcrumb = document.querySelector(".page-title .breadcrumbs .current");
     if (breadcrumb) breadcrumb.textContent = project.title;
 
+    const platforms = (project.platforms || []).join(", ");
+
     section.innerHTML =
       '<div class="container" data-aos="fade-up" data-aos-delay="100">' +
         '<div class="row gy-4">' +
           '<div class="col-lg-8">' +
-            '<div class="portfolio-details-slider swiper init-swiper">' +
-              '<script type="application/json" class="swiper-config">' +
-                JSON.stringify({
-                  loop: true,
-                  speed: 600,
-                  autoplay: { delay: 5000 },
-                  slidesPerView: "auto",
-                  pagination: { el: ".swiper-pagination", type: "bullets", clickable: true }
-                }) +
-              "<\/script>" +
-              '<div class="swiper-wrapper align-items-center">' + slides + "</div>" +
-              '<div class="swiper-pagination"></div>' +
+            media +
+            '<div class="portfolio-description" data-aos="fade-up" data-aos-delay="200">' +
+              "<h2>" + escapeHtml(project.title) + "</h2>" +
+              "<p>" + escapeHtml(project.description || project.shortDescription) + "</p>" +
+              renderTextBlock("My contribution", project.contribution) +
+              renderTagList("Technologies", project.technologies) +
             "</div>" +
           "</div>" +
           '<div class="col-lg-4">' +
             '<div class="portfolio-info" data-aos="fade-up" data-aos-delay="200">' +
               "<h3>Project information</h3>" +
               "<ul>" +
-                "<li><strong>Client</strong>: " + escapeHtml(project.client || "—") + "</li>" +
-                "<li><strong>Project date</strong>: " + escapeHtml(formatDate(project.projectDate)) + "</li>" +
-                renderLinks(project.links) +
+                infoRow("Category", project.category) +
+                infoRow("Platforms", platforms) +
+                infoRow("Company", project.company) +
+                infoRow("Client", project.client) +
+                (project.projectDate ? infoRow("Project date", formatDate(project.projectDate)) : "") +
               "</ul>" +
-              renderDownloadButtons(project.links) +
-            "</div>" +
-            '<div class="portfolio-description" data-aos="fade-up" data-aos-delay="300">' +
-              "<h2>" + escapeHtml(project.title) + "</h2>" +
-              "<p>" + escapeHtml(project.description || project.shortDescription) + "</p>" +
+              renderDownloadButtons(project) +
             "</div>" +
           "</div>" +
         "</div>" +

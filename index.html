@@ -125,10 +125,18 @@
 
       <div class="container">
 
-        <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order" data-dynamic-projects>
+        <div class="isotope-layout" data-dynamic-projects>
 
-          <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
+          <ul class="portfolio-filters project-filters" id="project-filters" aria-label="Filter projects by category" hidden></ul>
+
+          <div class="row gy-4 isotope-container project-grid" data-aos="fade-up" data-aos-delay="200">
             <div class="col-12 section-loading"><div class="section-spinner" role="status" aria-label="Loading"></div></div>
+          </div>
+
+          <p class="project-count" id="project-count" aria-live="polite"></p>
+
+          <div class="project-pager" id="project-pager" hidden>
+            <button type="button" class="btn-load-more" id="project-load-more">Show more projects</button>
           </div>
 
         </div>

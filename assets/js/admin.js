@@ -105,7 +105,7 @@
     }
     thumbnailPreview.innerHTML =
       '<div class="upload-preview-item">' +
-        '<img src="' + escapeHtml(formThumbnail) + '" alt="Thumbnail preview">' +
+        '<img src="' + escapeHtml(imageSrc(formThumbnail)) + '" alt="Thumbnail preview">' +
         '<button type="button" class="btn btn-sm btn-outline-danger" data-action="remove-thumbnail"><i class="bi bi-trash"></i> Remove</button>' +
       "</div>";
   }
@@ -119,7 +119,7 @@
     screenshotsPreview.innerHTML = formScreenshots.map(function (src, index) {
       return (
         '<div class="upload-preview-item" data-index="' + index + '">' +
-          '<img src="' + escapeHtml(src) + '" alt="Screenshot ' + (index + 1) + '">' +
+          '<img src="' + escapeHtml(imageSrc(src)) + '" alt="Screenshot ' + (index + 1) + '">' +
           '<button type="button" class="btn btn-sm btn-outline-danger" data-action="remove-screenshot" data-index="' + index + '"><i class="bi bi-trash"></i></button>' +
         "</div>"
       );
@@ -400,26 +400,41 @@
     document.getElementById("project-id").value = "";
     document.getElementById("project-published").checked = true;
     document.getElementById("form-title").textContent = "Add Project";
+    document.getElementById("project-thumbnail-path").value = "";
     document.getElementById("project-thumbnail-upload").value = "";
     document.getElementById("project-screenshots-upload").value = "";
     renderImagePreviews();
+  }
+
+  /** Comma separated inputs are stored as clean arrays. */
+  function parseList(value) {
+    return String(value || "")
+      .split(",")
+      .map(function (item) { return item.trim(); })
+      .filter(Boolean);
   }
 
   function fillProjectForm(project) {
     editingProjectId = project.id;
     document.getElementById("project-id").value = project.id;
     document.getElementById("project-title").value = project.title || "";
+    document.getElementById("project-category").value = project.category || "";
+    document.getElementById("project-platforms").value = (project.platforms || []).join(", ");
+    document.getElementById("project-technologies").value = (project.technologies || []).join(", ");
     document.getElementById("project-short-desc").value = project.shortDescription || "";
     document.getElementById("project-desc").value = project.description || "";
+    document.getElementById("project-contribution").value = project.contribution || "";
     document.getElementById("project-website").value = project.links?.website || "";
     document.getElementById("project-appstore").value = project.links?.appStore || "";
     document.getElementById("project-playstore").value = project.links?.playStore || "";
     document.getElementById("project-client").value = project.client || "";
+    document.getElementById("project-company").value = project.company || "";
     document.getElementById("project-date").value = project.projectDate || "";
     document.getElementById("project-published").checked = project.published !== false;
     document.getElementById("form-title").textContent = "Edit Project";
     formThumbnail = project.thumbnail || "";
     formScreenshots = Array.isArray(project.screenshots) ? project.screenshots.slice() : [];
+    document.getElementById("project-thumbnail-path").value = /^data:/i.test(formThumbnail) ? "" : formThumbnail;
     document.getElementById("project-thumbnail-upload").value = "";
     document.getElementById("project-screenshots-upload").value = "";
     renderImagePreviews();
@@ -428,19 +443,25 @@
   function collectProjectFromForm() {
     const title = document.getElementById("project-title").value.trim();
     const id = document.getElementById("project-id").value.trim() || PortfolioDataStore.generateId(title);
+    const thumbnailPath = document.getElementById("project-thumbnail-path").value.trim();
 
     return {
       id: id,
       title: title,
+      category: document.getElementById("project-category").value.trim(),
       shortDescription: document.getElementById("project-short-desc").value.trim(),
       description: document.getElementById("project-desc").value.trim(),
-      thumbnail: formThumbnail,
+      contribution: document.getElementById("project-contribution").value.trim(),
+      technologies: parseList(document.getElementById("project-technologies").value),
+      platforms: parseList(document.getElementById("project-platforms").value),
+      thumbnail: thumbnailPath || formThumbnail,
       screenshots: formScreenshots.slice(),
       links: {
         website: document.getElementById("project-website").value.trim(),
         appStore: document.getElementById("project-appstore").value.trim(),
         playStore: document.getElementById("project-playstore").value.trim()
       },
+      company: document.getElementById("project-company").value.trim(),
       client: document.getElementById("project-client").value.trim(),
       projectDate: document.getElementById("project-date").value,
       published: document.getElementById("project-published").checked
@@ -480,6 +501,9 @@
     });
 
     document.getElementById("project-thumbnail-upload")?.addEventListener("change", function (e) {
+      // An explicit upload replaces any repository path that was typed in.
+      const pathInput = document.getElementById("project-thumbnail-path");
+      if (pathInput) pathInput.value = "";
       handleImageFiles(e.target.files, "thumbnail");
       e.target.value = "";
     });
@@ -489,10 +513,18 @@
       e.target.value = "";
     });
 
+    document.getElementById("project-thumbnail-path")?.addEventListener("input", function (e) {
+      const path = e.target.value.trim();
+      if (path) formThumbnail = path;
+      renderImagePreviews();
+    });
+
     thumbnailPreview?.addEventListener("click", function (e) {
       const btn = e.target.closest('[data-action="remove-thumbnail"]');
       if (!btn) return;
       formThumbnail = "";
+      const pathInput = document.getElementById("project-thumbnail-path");
+      if (pathInput) pathInput.value = "";
       renderImagePreviews();
     });
 

@@ -820,67 +820,226 @@ section,
   }
 }
 
-.portfolio .portfolio-content {
-  position: relative;
-  overflow: hidden;
-}
-
-.portfolio .portfolio-content img {
-  transition: 0.3s;
-}
-
-.portfolio .portfolio-content .portfolio-info {
-  opacity: 0;
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-  transition: all ease-in-out 0.3s;
-  background: rgba(0, 0, 0, 0.6);
-  padding: 15px;
-}
-
-.portfolio .portfolio-content .portfolio-info h4 {
-  font-size: 14px;
-  padding: 5px 10px;
-  font-weight: 400;
-  color: #ffffff;
+.portfolio .portfolio-filters li .filter-count {
   display: inline-block;
-  background-color: var(--accent-color);
-}
-
-.portfolio .portfolio-content .portfolio-info p {
-  position: absolute;
-  bottom: 10px;
-  text-align: center;
-  display: inline-block;
-  left: 0;
-  right: 0;
-  font-size: 16px;
+  margin-left: 5px;
+  font-size: 11px;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.8);
+  color: color-mix(in srgb, var(--default-color), transparent 55%);
 }
 
-.portfolio .portfolio-content .portfolio-info .details-link {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 34px;
-  color: #fff;
-  transition: 0.3s;
-  line-height: 1;
-}
-
-.portfolio .portfolio-content .portfolio-info .details-link:hover {
+.portfolio .portfolio-filters li.filter-active .filter-count {
   color: var(--accent-color);
 }
 
-.portfolio .portfolio-content:hover .portfolio-info {
-  opacity: 1;
+/* Project cards */
+.portfolio .project-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--surface-color);
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
-.portfolio .portfolio-content:hover img {
-  transform: scale(1.1);
+.portfolio .project-card:hover {
+  transform: translateY(-4px);
+  border-color: color-mix(in srgb, var(--accent-color), transparent 65%);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.12);
+}
+
+/* Fixed ratio keeps every row aligned and stops any layout shift on load. */
+.portfolio .project-card-media {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--default-color), transparent 94%);
+}
+
+.portfolio .project-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.portfolio .project-card:hover .project-card-media img {
+  transform: scale(1.05);
+}
+
+.portfolio .project-platforms {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  gap: 6px;
+}
+
+.portfolio .project-platform {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  font-size: 14px;
+  color: #fff;
+  background: rgba(5, 13, 24, 0.78);
+  backdrop-filter: blur(2px);
+}
+
+.portfolio .project-card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  padding: 18px 18px 0 18px;
+}
+
+.portfolio .project-card-category {
+  align-self: flex-start;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--accent-color);
+  background: color-mix(in srgb, var(--accent-color), transparent 90%);
+  border-radius: 999px;
+  padding: 4px 10px;
+  margin-bottom: 10px;
+}
+
+.portfolio .project-card-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  line-height: 1.3;
+}
+
+.portfolio .project-card-title a {
+  color: var(--heading-color);
+  transition: color 0.3s;
+}
+
+.portfolio .project-card-title a:hover {
+  color: var(--accent-color);
+}
+
+.portfolio .project-card-text {
+  font-size: 14.5px;
+  line-height: 1.6;
+  margin: 0 0 14px 0;
+  color: color-mix(in srgb, var(--default-color), transparent 25%);
+}
+
+.portfolio .project-tech {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 0;
+  margin: auto 0 0 0;
+}
+
+.portfolio .project-tech li {
+  font-size: 11.5px;
+  line-height: 1;
+  padding: 5px 9px;
+  border-radius: 4px;
+  color: color-mix(in srgb, var(--default-color), transparent 20%);
+  background: color-mix(in srgb, var(--default-color), transparent 94%);
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+}
+
+.portfolio .project-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 16px 18px 18px 18px;
+}
+
+.portfolio .project-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12.5px;
+  font-weight: 500;
+  line-height: 1;
+  padding: 8px 12px;
+  border-radius: 6px;
+  color: var(--default-color);
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 82%);
+  transition: color 0.25s, border-color 0.25s, background-color 0.25s;
+}
+
+.portfolio .project-btn i {
+  font-size: 14px;
+}
+
+.portfolio .project-btn:hover {
+  color: var(--accent-color);
+  border-color: var(--accent-color);
+  background: color-mix(in srgb, var(--accent-color), transparent 92%);
+}
+
+.portfolio .project-btn-primary {
+  color: #fff;
+  background: var(--accent-color);
+  border-color: var(--accent-color);
+}
+
+.portfolio .project-btn-primary:hover {
+  color: #fff;
+  background: color-mix(in srgb, var(--accent-color), #000 12%);
+  border-color: color-mix(in srgb, var(--accent-color), #000 12%);
+}
+
+.portfolio .project-btn-primary i {
+  font-size: 17px;
+  margin-right: -2px;
+}
+
+/* Pager */
+.portfolio .project-count {
+  text-align: center;
+  margin: 26px 0 0 0;
+  font-size: 13.5px;
+  color: color-mix(in srgb, var(--default-color), transparent 45%);
+}
+
+.portfolio .project-pager {
+  text-align: center;
+  margin-top: 14px;
+}
+
+.portfolio .btn-load-more {
+  font-size: 14px;
+  font-weight: 500;
+  padding: 10px 26px;
+  border-radius: 999px;
+  color: var(--accent-color);
+  background: transparent;
+  border: 1px solid color-mix(in srgb, var(--accent-color), transparent 55%);
+  transition: color 0.25s, background-color 0.25s, border-color 0.25s;
+}
+
+.portfolio .btn-load-more:hover {
+  color: #fff;
+  background: var(--accent-color);
+  border-color: var(--accent-color);
+}
+
+@media (max-width: 575px) {
+  .portfolio .project-card-body {
+    padding: 16px 15px 0 15px;
+  }
+
+  .portfolio .project-card-actions {
+    padding: 14px 15px 16px 15px;
+  }
 }
 
 /*--------------------------------------------------------------
@@ -1200,6 +1359,56 @@ section,
 .portfolio-details .portfolio-description p {
   padding: 0;
   color: color-mix(in srgb, var(--default-color), transparent 30%);
+}
+
+.portfolio-details .portfolio-details-figure {
+  margin: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+}
+
+.portfolio-details .portfolio-details-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+}
+
+.portfolio-details .portfolio-detail-block {
+  margin-top: 26px;
+}
+
+.portfolio-details .portfolio-detail-block h3 {
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.portfolio-details .portfolio-tags {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0;
+  margin: 0;
+}
+
+.portfolio-details .portfolio-tags li {
+  font-size: 12.5px;
+  line-height: 1;
+  padding: 7px 12px;
+  border-radius: 5px;
+  color: color-mix(in srgb, var(--default-color), transparent 20%);
+  background: color-mix(in srgb, var(--default-color), transparent 94%);
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+}
+
+.portfolio-details .project-no-links {
+  margin: 16px 0 0 0;
+  font-size: 14px;
+  color: color-mix(in srgb, var(--default-color), transparent 45%);
 }
 
 /*--------------------------------------------------------------
@@ -1552,30 +1761,13 @@ iframe {
   }
 }
 
-/* Touch devices get no hover, so the project overlay has to stay visible. */
+/* Touch devices get no hover, so the card must not rely on hover to be usable. */
 @media (hover: none) {
-  .portfolio .portfolio-content .portfolio-info {
-    opacity: 1;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0) 80%);
-  }
-
-  .portfolio .portfolio-content .portfolio-info .details-link {
-    top: 12px;
-    right: 12px;
-    left: auto;
+  .portfolio .project-card:hover {
     transform: none;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: rgba(0, 0, 0, 0.45);
-    font-size: 28px;
-    line-height: 1;
   }
 
-  .portfolio .portfolio-content:hover img {
+  .portfolio .project-card:hover .project-card-media img {
     transform: none;
   }
 }

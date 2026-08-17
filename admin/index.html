@@ -136,12 +136,40 @@
               <div class="row g-3">
                 <div class="col-md-8"><label class="form-label">Title *</label><input type="text" class="form-control" id="project-title" required></div>
                 <div class="col-md-4"><label class="form-label">Project Date</label><input type="date" class="form-control" id="project-date"></div>
+                <div class="col-md-6">
+                  <label class="form-label">Category</label>
+                  <input type="text" class="form-control" id="project-category" list="project-category-options" placeholder="E-Commerce">
+                  <datalist id="project-category-options">
+                    <option value="E-Commerce"></option>
+                    <option value="Marketplace"></option>
+                    <option value="Transportation"></option>
+                    <option value="Management Systems"></option>
+                    <option value="Education"></option>
+                    <option value="Healthcare"></option>
+                    <option value="APIs / Backend Systems"></option>
+                    <option value="Corporate Websites"></option>
+                  </datalist>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Platforms</label>
+                  <input type="text" class="form-control" id="project-platforms" placeholder="Web, Android, iOS">
+                  <div class="form-text">Comma separated. Use Web, Android, iOS or Mobile.</div>
+                </div>
                 <div class="col-md-6"><label class="form-label">Client</label><input type="text" class="form-control" id="project-client"></div>
+                <div class="col-md-6"><label class="form-label">Company</label><input type="text" class="form-control" id="project-company" placeholder="Employer or agency"></div>
                 <div class="col-12"><label class="form-label">Short Description</label><input type="text" class="form-control" id="project-short-desc"></div>
                 <div class="col-12"><label class="form-label">Full Description</label><textarea class="form-control" id="project-desc" rows="4"></textarea></div>
+                <div class="col-12"><label class="form-label">My Contribution</label><textarea class="form-control" id="project-contribution" rows="3"></textarea></div>
+                <div class="col-12">
+                  <label class="form-label">Technologies</label>
+                  <input type="text" class="form-control" id="project-technologies" placeholder="Laravel, PHP, MySQL, REST API">
+                  <div class="form-text">Comma separated. Shown as tags on the project card.</div>
+                </div>
                 <div class="col-md-6">
                   <label class="form-label">Thumbnail *</label>
                   <input type="file" class="form-control" id="project-thumbnail-upload" accept="image/*">
+                  <input type="text" class="form-control mt-2" id="project-thumbnail-path" placeholder="assets/img/projects/name.webp">
+                  <div class="form-text">Upload a file, or point at a repository image path to keep storage small.</div>
                   <div id="thumbnail-preview" class="upload-preview mt-2"></div>
                 </div>
                 <div class="col-md-6">
