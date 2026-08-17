@@ -9,6 +9,9 @@
 
   if (!container) return;
 
+  const loader = window.SiteLoader;
+  if (loader) loader.register("projects");
+
   function escapeHtml(text) {
     const div = document.createElement("div");
     div.textContent = text || "";
@@ -75,6 +78,8 @@
     } catch (err) {
       console.error("Projects load error:", err);
       container.innerHTML = '<div class="col-12 text-center py-5"><p class="text-danger">Failed to load projects.</p></div>';
+    } finally {
+      if (loader) loader.done("projects");
     }
   }
 

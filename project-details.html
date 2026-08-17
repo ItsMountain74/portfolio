@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport">
   <title>Project Details</title>
   <link href="assets/img/favicon.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
@@ -23,18 +23,12 @@
   <header id="header" class="header dark-background d-flex flex-column">
     <i class="header-toggle d-xl-none bi bi-list"></i>
     <div class="profile-img">
-      <img src="assets/img/my-profile-img.jpg" alt="" class="img-fluid rounded-circle">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="" class="img-fluid rounded-circle">
     </div>
     <a href="index.html" class="logo d-flex align-items-center justify-content-center">
-      <h1 class="sitename">Alex Smith</h1>
+      <h1 class="sitename"></h1>
     </a>
-    <div class="social-links text-center">
-      <a href="#" class="twitter"><i class="bi bi-twitter-x"></i></a>
-      <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-      <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-      <a href="#" class="google-plus"><i class="bi bi-skype"></i></a>
-      <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
-    </div>
+    <div class="social-links text-center"></div>
     <nav id="navmenu" class="navmenu">
       <ul>
         <li><a href="index.html#hero"><i class="bi bi-house navicon"></i>Home</a></li>
@@ -61,8 +55,8 @@
     </div>
 
     <section id="portfolio-details" class="portfolio-details section">
-      <div class="container text-center py-5">
-        <div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div>
+      <div class="container">
+        <div class="section-loading"><div class="section-spinner" role="status" aria-label="Loading"></div></div>
       </div>
     </section>
   </main>
@@ -70,7 +64,7 @@
   <footer id="footer" class="footer position-relative light-background">
     <div class="container">
       <div class="copyright text-center ">
-        <p>© <span>Copyright</span> <strong class="px-1 sitename">iPortfolio</strong> <span>All Rights Reserved</span></p>
+        <p>© <span>Copyright</span> <strong class="px-1 sitename"></strong> <span>All Rights Reserved</span></p>
       </div>
     </div>
   </footer>
@@ -84,6 +78,7 @@
   <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
   <script src="assets/js/config.js"></script>
+  <script src="assets/js/site-loader.js"></script>
   <script src="assets/js/data-store.js"></script>
   <script src="assets/js/profile.js"></script>
   <script src="assets/js/project-details.js"></script>

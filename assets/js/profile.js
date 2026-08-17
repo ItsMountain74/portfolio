@@ -4,6 +4,9 @@
 (function () {
   "use strict";
 
+  const loader = window.SiteLoader;
+  if (loader) loader.register("profile");
+
   let typedInstance = null;
 
   function escapeHtml(text) {
@@ -95,7 +98,7 @@
       );
     }).join("") +
     (c.mapEmbedUrl
-      ? '<iframe src="' + escapeHtml(c.mapEmbedUrl) + '" frameborder="0" style="border:0; width: 100%; height: 270px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>'
+      ? '<iframe class="contact-map" src="' + escapeHtml(c.mapEmbedUrl) + '" title="Location map" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>'
       : "");
 
     if (typeof AOS !== "undefined" && AOS.refresh) {
@@ -207,6 +210,8 @@
       applyProfile(profile);
     } catch (err) {
       console.error("Profile load error:", err);
+    } finally {
+      if (loader) loader.done("profile");
     }
   }
 

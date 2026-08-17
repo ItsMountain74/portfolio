@@ -226,9 +226,65 @@ body.admin-page {
   .admin-main {
     margin-left: 0;
     width: 100%;
+    padding: 1rem;
   }
 
   .admin-layout {
     flex-direction: column;
+  }
+
+  /* Turn the vertical menu into a swipeable strip so it does not push
+     the whole dashboard below the fold. */
+  .admin-sidebar nav {
+    display: flex;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .admin-sidebar nav a {
+    flex: 0 0 auto;
+    padding: 0.75rem 1rem;
+    white-space: nowrap;
+    border-left: 0;
+    border-bottom: 3px solid transparent;
+  }
+
+  .admin-sidebar nav a:hover,
+  .admin-sidebar nav a.active {
+    border-left-color: transparent;
+    border-bottom-color: var(--admin-primary);
+  }
+
+  .admin-sidebar .brand {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .admin-card {
+    padding: 1rem;
+  }
+
+  .admin-topbar {
+    align-items: flex-start;
+  }
+
+  /* Keep wide tables scrollable instead of overflowing the viewport. */
+  .admin-table {
+    min-width: 560px;
+  }
+
+  .resume-preview iframe {
+    min-height: 60vh;
+  }
+
+  /* iOS zooms the page when a focused field is smaller than 16px. */
+  .admin-main .form-control,
+  .admin-main .form-select {
+    font-size: 16px;
+  }
+
+  .admin-stat .number {
+    font-size: 1.6rem;
   }
 }

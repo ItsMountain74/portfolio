@@ -7,6 +7,9 @@
   const container = document.querySelector("#services .services-container");
   if (!container) return;
 
+  const loader = window.SiteLoader;
+  if (loader) loader.register("services");
+
   function escapeHtml(text) {
     const div = document.createElement("div");
     div.textContent = text || "";
@@ -55,6 +58,8 @@
     } catch (err) {
       console.error("Services load error:", err);
       container.innerHTML = '<div class="col-12 text-center py-4"><p class="text-danger">Failed to load services.</p></div>';
+    } finally {
+      if (loader) loader.done("services");
     }
   }
 

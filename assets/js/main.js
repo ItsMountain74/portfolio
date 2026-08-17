@@ -49,7 +49,7 @@
    * Preloader
    */
   const preloader = document.querySelector('#preloader');
-  if (preloader) {
+  if (preloader && !window.SiteLoader) {
     window.addEventListener('load', () => {
       preloader.remove();
     });

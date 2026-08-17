@@ -7,6 +7,9 @@
   const section = document.querySelector("#portfolio-details");
   if (!section) return;
 
+  const loader = window.SiteLoader;
+  if (loader) loader.register("project-details");
+
   function escapeHtml(text) {
     const div = document.createElement("div");
     div.textContent = text || "";
@@ -39,7 +42,7 @@
       items.push('<li><strong>Website</strong>: <a href="' + escapeHtml(links.website) + '" target="_blank" rel="noopener">' + escapeHtml(links.website) + "</a></li>");
     }
     if (links.appStore) {
-      items.push('<li><strong>App Store</strong>: <a href="' + escapeHtml(links.appStore) + '" target="_blank" rel="noopener"><i class="bi bi-apple"></i> Download on App Store</a></li>");
+      items.push('<li><strong>App Store</strong>: <a href="' + escapeHtml(links.appStore) + '" target="_blank" rel="noopener"><i class="bi bi-apple"></i> Download on App Store</a></li>');
     }
     if (links.playStore) {
       items.push('<li><strong>Google Play</strong>: <a href="' + escapeHtml(links.playStore) + '" target="_blank" rel="noopener"><i class="bi bi-google-play"></i> Get it on Google Play</a></li>');
@@ -146,13 +149,13 @@
   }
 
   async function loadProject() {
-    const id = getProjectId();
-    if (!id) {
-      renderNotFound();
-      return;
-    }
-
     try {
+      const id = getProjectId();
+      if (!id) {
+        renderNotFound();
+        return;
+      }
+
       const projects = await PortfolioDataStore.getProjects();
       const project = projects.find(function (p) {
         return p.id === id && p.published !== false;
@@ -167,6 +170,8 @@
     } catch (err) {
       console.error("Project load error:", err);
       renderNotFound();
+    } finally {
+      if (loader) loader.done("project-details");
     }
   }
 
