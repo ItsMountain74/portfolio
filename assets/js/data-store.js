@@ -89,14 +89,60 @@ const PortfolioDataStore = (function () {
     }
   }
 
+  function formatBytes(bytes) {
+    if (bytes < 1024) return bytes + " B";
+    if (bytes < 1024 * 1024) return Math.round(bytes / 1024) + " KB";
+    return (bytes / (1024 * 1024)).toFixed(2) + " MB";
+  }
+
+  /**
+   * Approximate localStorage cost per key. Browsers store strings as UTF-16,
+   * so each character costs 2 bytes against the ~5 MB origin quota.
+   */
+  function getStorageUsage() {
+    const entries = [];
+    let total = 0;
+
+    Object.keys(STORAGE_KEYS).forEach(function (name) {
+      const key = STORAGE_KEYS[name];
+      let raw = "";
+      try {
+        raw = localStorage.getItem(key) || "";
+      } catch {
+        raw = "";
+      }
+      const bytes = (raw.length + key.length) * 2;
+      total += bytes;
+      if (raw) entries.push({ name: name, key: key, bytes: bytes });
+    });
+
+    entries.sort(function (a, b) { return b.bytes - a.bytes; });
+
+    return {
+      entries: entries,
+      totalBytes: total,
+      quotaBytes: 5 * 1024 * 1024,
+      formatBytes: formatBytes
+    };
+  }
+
   function writeLocal(key, data) {
     try {
       localStorage.setItem(key, JSON.stringify(data));
       return true;
     } catch (err) {
       console.error("localStorage save failed:", err);
-      if (err && err.name === "QuotaExceededError") {
-        alert("Storage is full. Export your JSON files and use smaller images, or clear old data from the admin panel.");
+
+      const quotaError = err && (err.name === "QuotaExceededError" || err.code === 22 || err.code === 1014);
+      if (quotaError) {
+        const usage = getStorageUsage();
+        const biggest = usage.entries[0];
+        alert(
+          "Browser storage is full (" + formatBytes(usage.totalBytes) + " of about 5 MB used).\n\n" +
+          (biggest ? "Largest item: " + biggest.name + " (" + formatBytes(biggest.bytes) + ")\n\n" : "") +
+          "Open Data & Export and run \"Optimize Stored Images\" to shrink oversized images, " +
+          "then try saving again."
+        );
       }
       return false;
     }
@@ -321,7 +367,8 @@ const PortfolioDataStore = (function () {
     adminLogout: adminLogout,
     generateId: generateId,
     slugify: slugify,
-    onDataChange: onDataChange
+    onDataChange: onDataChange,
+    getStorageUsage: getStorageUsage
   };
 })();
 

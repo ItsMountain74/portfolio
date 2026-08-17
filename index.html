@@ -58,7 +58,7 @@
         <li><a href="#resume"><i class="bi bi-file-earmark-text navicon"></i> Resume</a></li>
         <li><a href="#projects"><i class="bi bi-images navicon"></i> Projects</a></li>
         <li><a href="#services"><i class="bi bi-hdd-stack navicon"></i> Services</a></li>
-        <li><a href="#contact"><i class="bi bi-envelope navicon"></i> Contact</a></li>
+        <li><a id="nav-whatsapp" href="#" target="_blank" rel="noopener"><i class="bi bi-whatsapp navicon"></i> WhatsApp</a></li>
       </ul>
     </nav>
 
@@ -155,67 +155,23 @@
 
     </section><!-- /Services Section -->
 
-    <!-- Contact Section -->
-    <section id="contact" class="contact section">
+    <!-- WhatsApp Section -->
+    <section id="whatsapp" class="whatsapp-cta section">
 
-      <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
-        <h2>Contact</h2>
-        <p id="contact-intro"></p>
-      </div><!-- End Section Title -->
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-        <div class="row gy-4">
-
-          <div class="col-lg-5">
-
-            <div class="info-wrap" id="contact-info">
-              <div class="section-loading"><div class="section-spinner" role="status" aria-label="Loading"></div></div>
-            </div>
-          </div>
-
-          <div class="col-lg-7">
-            <form action="#" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
-              <div class="row gy-4">
-
-                <div class="col-md-6">
-                  <label for="name-field" class="pb-2">Your Name</label>
-                  <input type="text" name="name" id="name-field" class="form-control" required="">
-                </div>
-
-                <div class="col-md-6">
-                  <label for="email-field" class="pb-2">Your Email</label>
-                  <input type="email" class="form-control" name="email" id="email-field" required="">
-                </div>
-
-                <div class="col-md-12">
-                  <label for="subject-field" class="pb-2">Subject</label>
-                  <input type="text" class="form-control" name="subject" id="subject-field" required="">
-                </div>
-
-                <div class="col-md-12">
-                  <label for="message-field" class="pb-2">Message</label>
-                  <textarea class="form-control" name="message" rows="10" id="message-field" required=""></textarea>
-                </div>
-
-                <div class="col-md-12 text-center">
-                  <div class="loading">Loading</div>
-                  <div class="error-message"></div>
-                  <div class="sent-message">Your message has been sent. Thank you!</div>
-
-                  <button type="submit">Send Message</button>
-                </div>
-
-              </div>
-            </form>
-          </div><!-- End Contact Form -->
-
-        </div>
-
+        <h2>Get in touch</h2>
+        <p id="whatsapp-intro"></p>
       </div>
 
-    </section><!-- /Contact Section -->
+      <div class="container text-center" data-aos="fade-up" data-aos-delay="100">
+        <a id="whatsapp-button" class="whatsapp-button" href="#" target="_blank" rel="noopener">
+          <i class="bi bi-whatsapp"></i>
+          <span>Chat on WhatsApp</span>
+        </a>
+        <p id="whatsapp-number" class="whatsapp-number"></p>
+      </div>
+
+    </section><!-- /WhatsApp Section -->
 
   </main>
 
@@ -235,6 +191,11 @@
     </div>
 
   </footer>
+
+  <!-- Floating WhatsApp -->
+  <a id="whatsapp-float" class="whatsapp-float" href="#" target="_blank" rel="noopener" aria-label="Chat on WhatsApp" hidden>
+    <i class="bi bi-whatsapp"></i>
+  </a>
 
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
@@ -264,7 +225,6 @@
   <script src="assets/js/projects.js"></script>
   <script src="assets/js/services.js"></script>
   <script src="assets/js/resume.js"></script>
-  <script src="assets/js/contact.js"></script>
   <script src="assets/js/main.js"></script>
 
 </body>

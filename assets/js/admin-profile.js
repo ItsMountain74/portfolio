@@ -20,34 +20,6 @@
     return PortfolioDataStore.assetUrl(path);
   }
 
-  function compressImage(file, maxWidth) {
-    maxWidth = maxWidth || 1200;
-    return new Promise(function (resolve, reject) {
-      const reader = new FileReader();
-      reader.onload = function (event) {
-        const img = new Image();
-        img.onload = function () {
-          let width = img.width;
-          let height = img.height;
-          if (width > maxWidth) {
-            height = Math.round((height * maxWidth) / width);
-            width = maxWidth;
-          }
-          const canvas = document.createElement("canvas");
-          canvas.width = width;
-          canvas.height = height;
-          canvas.getContext("2d").drawImage(img, 0, 0, width, height);
-          const mime = file.type === "image/png" ? "image/png" : "image/jpeg";
-          resolve(canvas.toDataURL(mime, mime === "image/jpeg" ? 0.85 : undefined));
-        };
-        img.onerror = reject;
-        img.src = event.target.result;
-      };
-      reader.onerror = reject;
-      reader.readAsDataURL(file);
-    });
-  }
-
   function renderPreviews() {
     const profilePreview = document.getElementById("profile-image-preview");
     const heroPreview = document.getElementById("hero-bg-preview");
@@ -128,10 +100,8 @@
 
     const c = data.contact || {};
     document.getElementById("profile-contact-intro").value = c.intro || "";
-    document.getElementById("profile-contact-address").value = c.address || "";
-    document.getElementById("profile-contact-phone").value = c.phone || "";
-    document.getElementById("profile-contact-email").value = c.email || "";
-    document.getElementById("profile-contact-map").value = c.mapEmbedUrl || "";
+    document.getElementById("profile-contact-whatsapp").value = c.whatsapp || "";
+    document.getElementById("profile-contact-whatsapp-message").value = c.whatsappMessage || "";
 
     const s = data.social || {};
     document.getElementById("profile-twitter").value = s.twitter || "";
@@ -165,10 +135,8 @@
       skills: collectSkillsFromForm(),
       contact: {
         intro: document.getElementById("profile-contact-intro").value.trim(),
-        address: document.getElementById("profile-contact-address").value.trim(),
-        phone: document.getElementById("profile-contact-phone").value.trim(),
-        email: document.getElementById("profile-contact-email").value.trim(),
-        mapEmbedUrl: document.getElementById("profile-contact-map").value.trim()
+        whatsapp: document.getElementById("profile-contact-whatsapp").value.trim(),
+        whatsappMessage: document.getElementById("profile-contact-whatsapp-message").value.trim()
       },
       social: {
         twitter: document.getElementById("profile-twitter").value.trim(),
@@ -202,7 +170,7 @@
       const file = e.target.files[0];
       if (!file) return;
       try {
-        formProfileImage = await compressImage(file);
+        formProfileImage = await PortfolioImages.compressFile(file, "profile");
         renderPreviews();
       } catch {
         alert("Could not process profile image.");
@@ -214,7 +182,7 @@
       const file = e.target.files[0];
       if (!file) return;
       try {
-        formHeroBackground = await compressImage(file, 1600);
+        formHeroBackground = await PortfolioImages.compressFile(file, "hero");
         renderPreviews();
       } catch {
         alert("Could not process hero background.");

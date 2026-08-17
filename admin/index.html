@@ -97,12 +97,10 @@
                   <div id="skills-list" class="d-flex flex-column gap-2 mb-2"></div>
                   <button type="button" class="btn btn-outline-secondary btn-sm" id="add-skill-btn"><i class="bi bi-plus"></i> Add Skill</button>
                 </div>
-                <div class="col-12"><hr><h4 class="h6">Contact info</h4></div>
-                <div class="col-12"><label class="form-label">Contact section intro</label><textarea class="form-control" id="profile-contact-intro" rows="2"></textarea></div>
-                <div class="col-md-6"><label class="form-label">Address</label><input type="text" class="form-control" id="profile-contact-address"></div>
-                <div class="col-md-6"><label class="form-label">Contact phone</label><input type="text" class="form-control" id="profile-contact-phone"></div>
-                <div class="col-md-6"><label class="form-label">Contact email</label><input type="email" class="form-control" id="profile-contact-email"></div>
-                <div class="col-12"><label class="form-label">Google Maps embed URL</label><input type="url" class="form-control" id="profile-contact-map" placeholder="https://www.google.com/maps/embed?..."></div>
+                <div class="col-12"><hr><h4 class="h6">WhatsApp contact</h4></div>
+                <div class="col-12"><label class="form-label">Section intro</label><textarea class="form-control" id="profile-contact-intro" rows="2"></textarea></div>
+                <div class="col-md-6"><label class="form-label">WhatsApp number</label><input type="text" class="form-control" id="profile-contact-whatsapp" placeholder="+201095507797"><div class="form-text">Include the country code. Leave empty to hide the WhatsApp button.</div></div>
+                <div class="col-md-6"><label class="form-label">Pre-filled message (optional)</label><input type="text" class="form-control" id="profile-contact-whatsapp-message" placeholder="Hi! I saw your portfolio..."></div>
                 <div class="col-12"><hr><h4 class="h6">Social links</h4></div>
                 <div class="col-md-6"><label class="form-label">Twitter / X URL</label><input type="url" class="form-control" id="profile-twitter"></div>
                 <div class="col-md-6"><label class="form-label">Facebook URL</label><input type="url" class="form-control" id="profile-facebook"></div>
@@ -251,6 +249,15 @@
             <div class="mb-3"><label class="form-label">Import messages.json</label><input type="file" class="form-control" id="import-messages" accept=".json"></div>
           </div>
           <div class="admin-card">
+            <h3>Browser Storage</h3>
+            <p class="text-muted">Browsers allow about 5 MB per site. Large images are the usual cause of "storage is full" errors.</p>
+            <div class="storage-meter"><div id="storage-meter-bar" class="storage-meter-bar"></div></div>
+            <p id="storage-summary" class="small text-muted mb-2">Calculating...</p>
+            <ul id="storage-breakdown" class="storage-breakdown"></ul>
+            <button id="optimize-images" class="btn btn-primary"><i class="bi bi-arrows-angle-contract"></i> Optimize Stored Images</button>
+            <span id="optimize-status" class="ms-2 small text-muted"></span>
+          </div>
+          <div class="admin-card">
             <h3>Reset Local Data</h3>
             <p class="text-muted">Clear browser storage and reload from committed JSON files.</p>
             <button id="clear-local-data" class="btn btn-outline-danger"><i class="bi bi-trash"></i> Clear Local Data</button>
@@ -262,6 +269,7 @@
 
   <script src="../assets/js/config.js"></script>
   <script src="../assets/js/data-store.js"></script>
+  <script src="../assets/js/image-utils.js"></script>
   <script src="../assets/js/admin-profile.js"></script>
   <script src="../assets/js/admin.js"></script>
 </body>

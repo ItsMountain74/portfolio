@@ -72,36 +72,6 @@
     return PortfolioDataStore.assetUrl(value);
   }
 
-  function compressImage(file, maxWidth) {
-    maxWidth = maxWidth || 1400;
-    return new Promise(function (resolve, reject) {
-      const reader = new FileReader();
-      reader.onload = function (event) {
-        const img = new Image();
-        img.onload = function () {
-          let width = img.width;
-          let height = img.height;
-          if (width > maxWidth) {
-            height = Math.round((height * maxWidth) / width);
-            width = maxWidth;
-          }
-          const canvas = document.createElement("canvas");
-          canvas.width = width;
-          canvas.height = height;
-          const ctx = canvas.getContext("2d");
-          ctx.drawImage(img, 0, 0, width, height);
-          const mime = file.type === "image/png" ? "image/png" : "image/jpeg";
-          const quality = mime === "image/jpeg" ? 0.85 : undefined;
-          resolve(canvas.toDataURL(mime, quality));
-        };
-        img.onerror = reject;
-        img.src = event.target.result;
-      };
-      reader.onerror = reject;
-      reader.readAsDataURL(file);
-    });
-  }
-
   async function handleImageFiles(files, mode) {
     const list = Array.from(files || []).filter(function (file) {
       return file.type.startsWith("image/");
@@ -113,7 +83,7 @@
 
     for (const file of list) {
       try {
-        const dataUrl = await compressImage(file);
+        const dataUrl = await PortfolioImages.compressFile(file, mode === "thumbnail" ? "thumbnail" : "screenshot");
         if (mode === "thumbnail") {
           formThumbnail = dataUrl;
         } else {
@@ -171,9 +141,100 @@
     renderServicesTable();
     renderMessages();
     renderResumePreview();
+    renderStorageUsage();
     if (window.AdminProfile) {
       AdminProfile.load();
     }
+  }
+
+  function renderStorageUsage() {
+    const bar = document.getElementById("storage-meter-bar");
+    const summary = document.getElementById("storage-summary");
+    const breakdown = document.getElementById("storage-breakdown");
+    if (!summary) return;
+
+    const usage = PortfolioDataStore.getStorageUsage();
+    const percent = Math.min(100, Math.round((usage.totalBytes / usage.quotaBytes) * 100));
+
+    if (bar) {
+      bar.style.width = percent + "%";
+      bar.className = "storage-meter-bar" + (percent >= 85 ? " is-critical" : percent >= 60 ? " is-warning" : "");
+    }
+
+    summary.textContent = usage.formatBytes(usage.totalBytes) + " of about 5 MB used (" + percent + "%)";
+
+    if (breakdown) {
+      breakdown.innerHTML = usage.entries.map(function (entry) {
+        return "<li><span>" + escapeHtml(entry.name) + "</span><span>" + usage.formatBytes(entry.bytes) + "</span></li>";
+      }).join("");
+    }
+  }
+
+  /**
+   * Re-encodes images that were stored before the size budgets existed, which
+   * is what pushes localStorage over its quota.
+   */
+  async function optimizeStoredImages() {
+    const status = document.getElementById("optimize-status");
+    const setStatus = function (text) {
+      if (status) status.textContent = text;
+    };
+
+    setStatus("Optimizing...");
+
+    const before = PortfolioDataStore.getStorageUsage().totalBytes;
+    let changed = 0;
+
+    const profile = await PortfolioDataStore.getProfile();
+    const heroSmaller = await PortfolioImages.shrinkDataUrl(profile.heroBackground, "hero");
+    if (heroSmaller) {
+      profile.heroBackground = heroSmaller;
+      changed++;
+    }
+    const profileSmaller = await PortfolioImages.shrinkDataUrl(profile.profileImage, "profile");
+    if (profileSmaller) {
+      profile.profileImage = profileSmaller;
+      changed++;
+    }
+    if (heroSmaller || profileSmaller) {
+      PortfolioDataStore.saveProfile(profile);
+    }
+
+    const allProjects = await PortfolioDataStore.getProjects();
+    let projectsChanged = false;
+
+    for (const project of allProjects) {
+      const thumb = await PortfolioImages.shrinkDataUrl(project.thumbnail, "thumbnail");
+      if (thumb) {
+        project.thumbnail = thumb;
+        projectsChanged = true;
+        changed++;
+      }
+
+      if (Array.isArray(project.screenshots)) {
+        for (let i = 0; i < project.screenshots.length; i++) {
+          const shot = await PortfolioImages.shrinkDataUrl(project.screenshots[i], "screenshot");
+          if (shot) {
+            project.screenshots[i] = shot;
+            projectsChanged = true;
+            changed++;
+          }
+        }
+      }
+    }
+
+    if (projectsChanged) {
+      PortfolioDataStore.saveProjects(allProjects);
+    }
+
+    await refreshData();
+
+    const after = PortfolioDataStore.getStorageUsage().totalBytes;
+    const saved = Math.max(0, before - after);
+
+    setStatus(changed === 0
+      ? "All images are already within the size budget."
+      : "Optimized " + changed + " image(s), freed " + PortfolioImages.formatBytes(saved) + ".");
   }
 
   function renderStats() {
@@ -704,6 +765,19 @@
         alert("Invalid JSON file.");
       }
       e.target.value = "";
+    });
+
+    document.getElementById("optimize-images")?.addEventListener("click", async function () {
+      const button = this;
+      button.disabled = true;
+      try {
+        await optimizeStoredImages();
+      } catch (err) {
+        console.error("Optimize failed:", err);
+        const status = document.getElementById("optimize-status");
+        if (status) status.textContent = "Could not optimize images.";
+      }
+      button.disabled = false;
     });
 
     document.getElementById("clear-local-data")?.addEventListener("click", function () {

@@ -197,6 +197,45 @@ body.admin-page {
   background: #f8f9fa;
 }
 
+.storage-meter {
+  height: 10px;
+  border-radius: 6px;
+  background: #e9ecef;
+  overflow: hidden;
+  margin-bottom: 0.6rem;
+}
+
+.storage-meter-bar {
+  height: 100%;
+  width: 0;
+  background: var(--admin-primary);
+  transition: width 0.3s ease;
+}
+
+.storage-meter-bar.is-warning {
+  background: #f0ad4e;
+}
+
+.storage-meter-bar.is-critical {
+  background: #dc3545;
+}
+
+.storage-breakdown {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem 0;
+  font-size: 0.85rem;
+  color: var(--admin-muted);
+}
+
+.storage-breakdown li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.2rem 0;
+  border-bottom: 1px solid #f1f3f5;
+}
+
 .admin-panel {
   display: none;
 }

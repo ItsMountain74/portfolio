@@ -1282,6 +1282,73 @@ section,
 }
 
 /*--------------------------------------------------------------
+# WhatsApp Call To Action
+--------------------------------------------------------------*/
+.whatsapp-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px 34px;
+  min-height: 56px;
+  border-radius: 50px;
+  background: #25d366;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+  font-family: var(--heading-font);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.3);
+  transition: transform 0.25s ease, background-color 0.25s ease;
+}
+
+.whatsapp-button:hover {
+  background: #1ebe5b;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.whatsapp-button i {
+  font-size: 26px;
+  line-height: 1;
+}
+
+.whatsapp-number {
+  margin: 18px 0 0 0;
+  font-size: 16px;
+  letter-spacing: 0.5px;
+  color: color-mix(in srgb, var(--default-color), transparent 35%);
+}
+
+.whatsapp-float {
+  position: fixed;
+  right: 15px;
+  bottom: 70px;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #25d366;
+  color: #fff;
+  font-size: 27px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  transition: transform 0.25s ease, background-color 0.25s ease;
+}
+
+.whatsapp-float:hover {
+  background: #1ebe5b;
+  color: #fff;
+  transform: scale(1.06);
+}
+
+.whatsapp-float[hidden],
+#whatsapp[hidden] {
+  display: none;
+}
+
+/*--------------------------------------------------------------
 # Section Loading Spinner
 --------------------------------------------------------------*/
 .section-loading {
@@ -1481,12 +1548,10 @@ iframe {
     min-height: 60vh;
   }
 
-  .contact .info-item {
-    margin-bottom: 24px;
-  }
-
-  .contact .contact-map {
-    height: 220px;
+  .whatsapp-button {
+    width: 100%;
+    max-width: 340px;
+    font-size: 17px;
   }
 
   .portfolio-details .portfolio-info {
@@ -1567,37 +1632,14 @@ iframe {
     justify-content: center;
   }
 
-  .contact .info-item i {
-    width: 40px;
-    height: 40px;
-    font-size: 18px;
-    margin-right: 12px;
-  }
-
-  .contact .info-item h3 {
-    font-size: 16px;
-  }
-
   .page-title h1 {
     font-size: 20px;
   }
-}
 
-/* iOS zooms the page when a focused field is smaller than 16px. */
-@media (max-width: 767px) {
-
-  .contact .php-email-form input[type=text],
-  .contact .php-email-form input[type=email],
-  .contact .php-email-form textarea {
-    font-size: 16px;
-  }
-
-  .contact .php-email-form textarea {
-    height: 160px;
-  }
-
-  .contact .php-email-form button[type=submit] {
-    width: 100%;
-    min-height: 46px;
+  .whatsapp-float {
+    width: 48px;
+    height: 48px;
+    font-size: 25px;
+    bottom: 66px;
   }
 }

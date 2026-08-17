@@ -75,31 +75,46 @@
     initSkillsAnimation(container.querySelector(".skills-animation"));
   }
 
-  function renderContactInfo(profile) {
-    const intro = document.getElementById("contact-intro");
-    const wrap = document.getElementById("contact-info");
-    if (!wrap) return;
+  /** wa.me only accepts digits, so strip spaces, dashes and the leading plus. */
+  function toWhatsappDigits(value) {
+    return String(value || "").replace(/\D/g, "");
+  }
 
-    const c = profile.contact || {};
-    if (intro) intro.textContent = c.intro || "";
+  function formatPhone(value) {
+    const digits = toWhatsappDigits(value);
+    return digits ? "+" + digits : "";
+  }
 
-    const items = [
-      { icon: "bi-geo-alt", title: "Address", value: c.address, delay: 200 },
-      { icon: "bi-telephone", title: "Call Us", value: c.phone, delay: 300 },
-      { icon: "bi-envelope", title: "Email Us", value: c.email, delay: 400 }
-    ];
+  function renderWhatsapp(profile) {
+    const contact = profile.contact || {};
+    const digits = toWhatsappDigits(contact.whatsapp);
+    const section = document.getElementById("whatsapp");
 
-    wrap.innerHTML = items.filter(function (item) { return item.value; }).map(function (item) {
-      return (
-        '<div class="info-item d-flex" data-aos="fade-up" data-aos-delay="' + item.delay + '">' +
-          '<i class="bi ' + item.icon + ' flex-shrink-0"></i>' +
-          "<div><h3>" + escapeHtml(item.title) + "</h3><p>" + escapeHtml(item.value) + "</p></div>" +
-        "</div>"
-      );
-    }).join("") +
-    (c.mapEmbedUrl
-      ? '<iframe class="contact-map" src="' + escapeHtml(c.mapEmbedUrl) + '" title="Location map" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>'
-      : "");
+    if (!digits) {
+      if (section) section.hidden = true;
+      document.getElementById("whatsapp-float")?.setAttribute("hidden", "");
+      document.getElementById("nav-whatsapp")?.closest("li")?.setAttribute("hidden", "");
+      return;
+    }
+
+    const href = "https://wa.me/" + digits +
+      (contact.whatsappMessage ? "?text=" + encodeURIComponent(contact.whatsappMessage) : "");
+
+    if (section) section.hidden = false;
+
+    const intro = document.getElementById("whatsapp-intro");
+    if (intro) intro.textContent = contact.intro || "";
+
+    const number = document.getElementById("whatsapp-number");
+    if (number) number.textContent = formatPhone(digits);
+
+    ["whatsapp-button", "whatsapp-float", "nav-whatsapp"].forEach(function (id) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.href = href;
+      el.removeAttribute("hidden");
+      el.closest("li")?.removeAttribute("hidden");
+    });
 
     if (typeof AOS !== "undefined" && AOS.refresh) {
       AOS.refresh();
@@ -200,7 +215,7 @@
 
     renderSocialLinks(profile.social);
     renderSkills(profile);
-    renderContactInfo(profile);
+    renderWhatsapp(profile);
     initTyped(profile.typedRoles);
   }
 
