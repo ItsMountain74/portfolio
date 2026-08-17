@@ -860,26 +860,19 @@ section,
   color: rgba(255, 255, 255, 0.8);
 }
 
-.portfolio .portfolio-content .portfolio-info .preview-link,
 .portfolio .portfolio-content .portfolio-info .details-link {
   position: absolute;
-  left: calc(50% - 40px);
-  font-size: 26px;
-  top: calc(50% - 14px);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 34px;
   color: #fff;
   transition: 0.3s;
-  line-height: 1.2;
+  line-height: 1;
 }
 
-.portfolio .portfolio-content .portfolio-info .preview-link:hover,
 .portfolio .portfolio-content .portfolio-info .details-link:hover {
   color: var(--accent-color);
-}
-
-.portfolio .portfolio-content .portfolio-info .details-link {
-  left: 50%;
-  font-size: 34px;
-  line-height: 0;
 }
 
 .portfolio .portfolio-content:hover .portfolio-info {
@@ -1566,10 +1559,11 @@ iframe {
     background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0) 80%);
   }
 
-  .portfolio .portfolio-content .portfolio-info .preview-link,
   .portfolio .portfolio-content .portfolio-info .details-link {
     top: 12px;
+    right: 12px;
     left: auto;
+    transform: none;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -1577,17 +1571,8 @@ iframe {
     height: 44px;
     border-radius: 50%;
     background: rgba(0, 0, 0, 0.45);
-    line-height: 1;
-  }
-
-  .portfolio .portfolio-content .portfolio-info .preview-link {
-    right: 62px;
-    font-size: 22px;
-  }
-
-  .portfolio .portfolio-content .portfolio-info .details-link {
-    right: 12px;
     font-size: 28px;
+    line-height: 1;
   }
 
   .portfolio .portfolio-content:hover img {

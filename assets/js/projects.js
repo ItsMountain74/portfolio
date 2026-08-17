@@ -21,7 +21,6 @@
   function renderProject(project) {
     const thumb = PortfolioDataStore.assetUrl(project.thumbnail);
     const detailsUrl = PortfolioDataStore.pageUrl("project-details.html?id=" + encodeURIComponent(project.id));
-    const galleryId = "project-gallery-" + project.id;
 
     const col = document.createElement("div");
     col.className = "col-lg-4 col-md-6 portfolio-item isotope-item";
@@ -31,7 +30,6 @@
         '<div class="portfolio-info">' +
           "<h4>" + escapeHtml(project.title) + "</h4>" +
           "<p>" + escapeHtml(project.shortDescription) + "</p>" +
-          '<a href="' + escapeHtml(thumb) + '" title="' + escapeHtml(project.title) + '" data-gallery="' + escapeHtml(galleryId) + '" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>' +
           '<a href="' + escapeHtml(detailsUrl) + '" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>' +
         "</div>" +
       "</div>";
@@ -51,12 +49,6 @@
     });
   }
 
-  function initGlightbox() {
-    if (typeof GLightbox === "function") {
-      GLightbox({ selector: ".glightbox" });
-    }
-  }
-
   async function loadProjects() {
     try {
       const projects = (await PortfolioDataStore.getProjects()).filter(function (p) {
@@ -74,7 +66,6 @@
       });
 
       initIsotope();
-      initGlightbox();
     } catch (err) {
       console.error("Projects load error:", err);
       container.innerHTML = '<div class="col-12 text-center py-5"><p class="text-danger">Failed to load projects.</p></div>';
