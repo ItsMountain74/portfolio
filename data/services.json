@@ -2,29 +2,106 @@
   {
     "id": "web-development",
     "title": "Web Development",
-    "description": "I build modern, responsive, and user-friendly websites tailored to business needs. The website can include landing pages, company profiles, service pages, contact forms, multilingual support, and admin dashboard management.",
-    "icon": "bi-bell-fill",
+    "description": "I build modern, responsive websites and web platforms tailored to business goals, including landing pages, company profiles, service sites, portals, dashboards, and multilingual experiences.",
+    "icon": "bi-window",
     "published": true
   },
   {
-    "id": "mobile-apps",
-    "title": "Mobile Apps",
-    "description": "Cross-platform mobile applications for iOS and Android with polished UI and smooth user experience.",
+    "id": "laravel-backend-development",
+    "title": "Laravel Backend Development",
+    "description": "I design and build scalable Laravel backends for startups and businesses, covering architecture, APIs, business logic, authentication, admin tooling, and integrations.",
+    "icon": "bi-server",
+    "published": true
+  },
+  {
+    "id": "rest-api-development",
+    "title": "REST API Development",
+    "description": "I create clean, secure REST APIs for web and mobile apps, with structured endpoints, validation, permissions, version-aware design, and reliable integration flows.",
+    "icon": "bi-diagram-3",
+    "published": true
+  },
+  {
+    "id": "e-commerce-development",
+    "title": "E-commerce Development",
+    "description": "I develop custom e-commerce platforms with product catalogues, carts, checkout, orders, coupons, customer accounts, inventory-aware flows, shipping setup, and payment integration.",
+    "icon": "bi-briefcase",
+    "published": true
+  },
+  {
+    "id": "admin-dashboard-development",
+    "title": "Admin Dashboard Development",
+    "description": "I build powerful admin dashboards for managing users, content, orders, providers, reports, requests, operations, and day-to-day business workflows.",
+    "icon": "bi-speedometer2",
+    "published": true
+  },
+  {
+    "id": "marketplace-platforms",
+    "title": "Marketplace Platforms",
+    "description": "I build marketplace systems that connect multiple user types such as customers, vendors, service providers, consultants, and delivery teams with role-based workflows.",
+    "icon": "bi-shop",
+    "published": true
+  },
+  {
+    "id": "multi-vendor-systems",
+    "title": "Multi-Vendor Systems",
+    "description": "I develop multi-vendor platforms where sellers or providers can manage products or services while admins control approvals, visibility, transactions, and operations centrally.",
+    "icon": "bi-grid-3x3-gap",
+    "published": true
+  },
+  {
+    "id": "mobile-app-backend-support",
+    "title": "Mobile App Backend Support",
+    "description": "I provide backend systems and API support for Android and iOS applications, enabling authentication, content delivery, notifications, account flows, and app-side business logic.",
     "icon": "bi-phone",
     "published": true
   },
   {
-    "id": "consulting",
-    "title": "Technical Consulting",
-    "description": "Architecture reviews, code audits, and guidance to help teams ship reliable digital products faster.",
-    "icon": "bi-lightbulb",
+    "id": "authentication-and-roles",
+    "title": "Authentication & Role Systems",
+    "description": "I implement secure authentication, multi-auth access control, guards, roles, and permissions for systems that serve admins, customers, providers, and other user groups.",
+    "icon": "bi-shield-lock",
     "published": true
   },
   {
-    "id": "custom-website-development-mr7p17xu",
-    "title": "E-commerce Development",
-    "description": "I develop custom e-commerce platforms with features like products, categories, carts, orders, coupons, payments, shipping, invoices, customer management, and order tracking.",
-    "icon": "bi-briefcase",
+    "id": "payment-integration",
+    "title": "Payment Integration",
+    "description": "I integrate payment flows into web systems, including checkout logic, order confirmation, transaction handling, and payment-aware business processes.",
+    "icon": "bi-credit-card",
+    "published": true
+  },
+  {
+    "id": "booking-and-request-workflows",
+    "title": "Booking & Request Workflows",
+    "description": "I build platforms around requests, offers, assignments, bookings, and service fulfilment for maintenance, transport, consultation, and service-based products.",
+    "icon": "bi-ui-checks-grid",
+    "published": true
+  },
+  {
+    "id": "operations-and-management-systems",
+    "title": "Operations Management Systems",
+    "description": "I create internal systems that help businesses organize dispatching, subscriptions, order lifecycles, provider coordination, tracking, and operational oversight.",
+    "icon": "bi-kanban",
+    "published": true
+  },
+  {
+    "id": "database-design",
+    "title": "Database Design",
+    "description": "I design relational database structures that support real business workflows, including reporting, performance, maintainability, and long-term product growth.",
+    "icon": "bi-database",
+    "published": true
+  },
+  {
+    "id": "project-maintenance-and-enhancements",
+    "title": "Maintenance & Feature Enhancements",
+    "description": "I improve existing systems by fixing issues, refining features, extending business logic, and maintaining legacy or active products without disrupting current operations.",
+    "icon": "bi-tools",
+    "published": true
+  },
+  {
+    "id": "technical-consulting",
+    "title": "Technical Consulting",
+    "description": "I help define product scope, backend direction, system structure, and practical implementation plans so teams can ship reliable digital products faster.",
+    "icon": "bi-lightbulb",
     "published": true
   }
 ]

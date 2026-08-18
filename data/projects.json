@@ -215,7 +215,7 @@
     "category": "Healthcare",
     "shortDescription": "Therapeutic app supporting children's speech and language.",
     "description": "A therapeutic digital application that supports children with autism, speech delays and psychological difficulties. Guided exercises and interactive activities are used to strengthen language development and communication abilities.",
-    "contribution": "Maintained the website, administrative dashboard and transactions, and built the APIs consumed by the mobile application.",
+    "contribution": "Refactored and restructured the whole backend and the database to improve code quality, performance, reusability and maintainability.",
     "technologies": ["Laravel", "PHP", "MySQL", "REST API"],
     "platforms": ["Web", "Android"],
     "company": "Maharat Tefl",
