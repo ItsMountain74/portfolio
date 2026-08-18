@@ -294,27 +294,6 @@
     "published": true
   },
   {
-    "id": "arsel",
-    "title": "Arsel",
-    "category": "Transportation",
-    "shortDescription": "Delivery service platform with a full admin dashboard.",
-    "description": "A comprehensive delivery service platform, built through team collaboration, that enables items to be delivered to any destination. The system covers order placement, courier assignment and tracking across the full delivery lifecycle.",
-    "contribution": "Held primary responsibility for creating the administrative dashboard used to manage orders, delivery operations and platform data.",
-    "technologies": ["Laravel", "PHP", "MySQL"],
-    "platforms": ["Web"],
-    "company": "",
-    "client": "Arsel",
-    "thumbnail": "assets/img/projects/arsel.webp",
-    "screenshots": [],
-    "links": {
-      "website": "",
-      "playStore": "",
-      "appStore": ""
-    },
-    "projectDate": "",
-    "published": true
-  },
-  {
     "id": "research-assistant",
     "title": "Research Assistant",
     "category": "Marketplace",
