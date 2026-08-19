@@ -1,5 +1,68 @@
 [
   {
+    "id": "waddini",
+    "title": "Waddini",
+    "category": "Transportation",
+    "shortDescription": "Transportation platform operating across Iraqi cities.",
+    "description": "A transportation platform operating in Iraq that supports local, intercity, and airport trips. Passengers book rides instantly or schedule them ahead, track drivers in real time, and communicate securely in-app, while drivers manage their trips and earnings through a dedicated interface.",
+    "contribution": "Developed and refactored the backend powering trip management, real-time tracking, driver workflows, and overall system reliability and performance.",
+    "technologies": ["Laravel", "PHP", "MySQL", "REST API"],
+    "platforms": ["Web", "Android", "iOS"],
+    "company": "Breem Solutions",
+    "client": "Waddini",
+    "thumbnail": "assets/img/projects/waddini.webp",
+    "screenshots": [],
+    "links": {
+      "website": "https://hala-technology.com/Waddini/",
+      "playStore": "https://play.google.com/store/apps/details?id=com.coddiv.waddini",
+      "appStore": "https://apps.apple.com/us/app/waddini-%D9%88%D8%AF%D9%8A%D9%86%D9%8A/id6748650063"
+    },
+    "projectDate": "",
+    "published": true
+  },
+  {
+    "id": "tamrenk",
+    "title": "Tamrenk",
+    "category": "Management Systems",
+    "shortDescription": "Membership and subscription management for clubs and gyms.",
+    "description": "A membership and subscription management platform for clubs and gyms, enabling businesses to showcase their facilities, services, and packages while allowing users to subscribe, renew memberships, track visits, and manage package usage.",
+    "contribution": "Developed the backend handling subscriptions, membership renewals, visit tracking, package management, and the business-facing facility and service catalogue.",
+    "technologies": ["Laravel", "PHP", "MySQL", "REST API"],
+    "platforms": ["Web", "Mobile"],
+    "company": "True Marketing Solutions",
+    "client": "Tamrenk",
+    "thumbnail": "assets/img/projects/tamrenk.webp",
+    "screenshots": [],
+    "links": {
+      "website": "https://tamrenk.com/",
+      "playStore": "",
+      "appStore": ""
+    },
+    "projectDate": "",
+    "published": true
+  },
+  {
+    "id": "growing",
+    "title": "Growing",
+    "category": "Management Systems",
+    "shortDescription": "Smart livestock and farm management platform.",
+    "description": "A smart livestock and farm management platform that enables farm owners to manage barns, animals, feed, vaccinations, inventory, and daily operations, with real-time reporting, automated alerts, staff access controls, and subscription management to improve productivity and reduce operational losses.",
+    "contribution": "Developed the backend covering barn and animal management, feed and vaccination scheduling, inventory tracking, automated alerts, role-based staff access, and subscription billing.",
+    "technologies": ["Laravel", "PHP", "MySQL", "REST API"],
+    "platforms": ["Web"],
+    "company": "True Marketing Solutions",
+    "client": "Growing",
+    "thumbnail": "assets/img/projects/growing.webp",
+    "screenshots": [],
+    "links": {
+      "website": "https://namo.4hoste.com/",
+      "playStore": "",
+      "appStore": ""
+    },
+    "projectDate": "",
+    "published": true
+  },
+  {
     "id": "loh",
     "title": "LOH",
     "category": "E-Commerce",
